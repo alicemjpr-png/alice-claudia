@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orientação Personalizada · Alice Cláudia</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#1a1714;--card:#242018;--gold:#d4aa6a;--gold2:#b8904a;--cream:#f4ede4;--muted:rgba(244,237,228,0.45);--border:rgba(244,237,228,0.08)}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);min-height:100vh;padding:0 0 60px}
+.wrap{max-width:480px;margin:0 auto;padding:0 20px}
+.header{text-align:center;padding:48px 20px 32px}
+.brand{font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold2);margin-bottom:12px}
+.title{font-family:'Lora',serif;font-size:26px;color:var(--cream);font-weight:400;line-height:1.3}
+.title em{color:var(--gold);font-style:italic}
+.subtitle{font-size:14px;color:var(--muted);margin-top:10px;line-height:1.7}
+.price-box{background:var(--card);border:1px solid rgba(212,170,106,0.2);border-radius:16px;padding:24px;text-align:center;margin:0 20px 20px}
+.price-lbl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.price-val{font-family:'Lora',serif;font-size:48px;color:var(--gold);font-weight:400}
+.price-val span{font-size:24px;vertical-align:top;margin-top:8px;display:inline-block}
+.price-note{font-size:12px;color:var(--muted);margin-top:6px}
+.inc-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin:0 20px 16px}
+.inc-lbl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold2);margin-bottom:14px}
+.inc{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.inc:last-child{margin-bottom:0}
+.inc-ico{font-size:16px;flex-shrink:0;margin-top:1px}
+.inc-txt{font-size:13px;color:rgba(244,237,228,0.7);line-height:1.6}
+.inc-txt strong{color:var(--cream)}
+.warn{background:rgba(212,170,106,0.06);border:1px solid rgba(212,170,106,0.15);border-radius:12px;padding:16px;margin:0 20px 20px;display:flex;gap:12px;align-items:flex-start}
+.warn-ico{font-size:16px;flex-shrink:0}
+.warn-txt{font-size:12px;color:var(--muted);line-height:1.7}
+.warn-txt strong{color:rgba(244,237,228,0.7)}
+.steps{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:0 20px 20px}
+.step{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:flex-start}
+.step:last-child{border-bottom:none}
+.step-n{width:26px;height:26px;border-radius:50%;background:rgba(184,144,74,0.15);border:1px solid rgba(184,144,74,0.3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--gold2);flex-shrink:0;margin-top:1px}
+.step-b{flex:1}
+.step-t{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:3px}
+.step-d{font-size:12px;color:var(--muted);line-height:1.5}
+.mbway{background:rgba(184,144,74,0.08);border:1px solid rgba(184,144,74,0.25);border-radius:10px;padding:14px 16px;margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mbway-lbl{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.mbway-num{font-family:'Lora',serif;font-size:22px;color:var(--gold);letter-spacing:0.05em}
+.copy-btn{background:rgba(212,170,106,0.15);border:1px solid rgba(212,170,106,0.3);color:var(--gold);font-size:12px;padding:8px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
+.copy-btn:active{background:rgba(212,170,106,0.3)}
+.form-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin:0 20px 20px}
+.form-lbl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold2);margin-bottom:16px}
+.f-grp{margin-bottom:14px}
+.f-lbl{font-size:12px;color:var(--muted);margin-bottom:6px;display:block}
+.f-inp{width:100%;background:rgba(244,237,228,0.05);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--cream);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;-webkit-appearance:none}
+.f-inp:focus{border-color:rgba(212,170,106,0.4)}
+.f-inp::placeholder{color:var(--muted)}
+.btn-main{width:100%;background:var(--gold2);color:#1a1714;font-size:15px;font-weight:600;padding:16px;border-radius:12px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px}
+.btn-main:active{background:var(--gold)}
+.footer{text-align:center;padding:32px 20px 0;font-size:11px;color:rgba(244,237,228,0.2)}
+/* success page */
+#suc{display:none;padding:48px 20px;text-align:center}
+.suc-ico{font-size:48px;margin-bottom:16px;display:block}
+.suc-title{font-family:'Lora',serif;font-size:22px;color:var(--cream);margin-bottom:8px}
+.suc-sub{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:24px}
+.suc-note{background:rgba(184,144,74,0.08);border:1px solid rgba(184,144,74,0.2);border-radius:12px;padding:16px;margin-bottom:20px;font-size:13px;color:rgba(244,237,228,0.65);line-height:1.75;text-align:left}
+.suc-note strong{color:var(--gold)}
+.btn-link{display:block;background:var(--gold2);color:#1a1714;font-size:15px;font-weight:600;padding:16px;border-radius:12px;text-decoration:none;text-align:center}
+</style>
+</head>
+<body>
+
+<div id="main">
+  <div class="header">
+    <div class="brand">Alice Cláudia</div>
+    <h1 class="title">Orientação Personalizada<br><em>de Óculos</em></h1>
+    <p class="subtitle">Uma preparação personalizada para encontrares a armação certa, antes de ires à loja ou para orientares a tua escolha onde estiveres.</p>
+  </div>
+
+  <div class="wrap">
+
+    <div class="price-box">
+      <div class="price-lbl">Valor da Orientação Personalizada</div>
+      <div class="price-val"><span>&euro;</span>10</div>
+      <div class="price-note">Pagamento único · Resposta em até 48 horas</div>
+    </div>
+
+    <div class="inc-box">
+      <div class="inc-lbl">O que inclui</div>
+      <div class="inc"><span class="inc-ico">📸</span><div class="inc-txt"><strong>Análise com base em fotografia</strong> do teu rosto, enviada pelo Instagram antes da orientação</div></div>
+      <div class="inc"><span class="inc-ico">🕶️</span><div class="inc-txt"><strong>Recomendação personalizada</strong> de formatos, cores e materiais de armação</div></div>
+      <div class="inc"><span class="inc-ico">💬</span><div class="inc-txt"><strong>Resumo por escrito</strong> com os modelos indicados para o teu perfil</div></div>
+      <div class="inc"><span class="inc-ico">📹</span><div class="inc-txt"><strong>Videochamada opcional</strong> para esclarecer dúvidas, se necessário</div></div>
+    </div>
+
+    <div class="warn">
+      <div class="warn-ico">⚠️</div>
+      <div class="warn-txt">Esta orientação personalizada é uma <strong>preparação orientada</strong>, não substitui o atendimento presencial numa óptica. Para graduações, ajustes e experimentação de armações, o acompanhamento ao vivo é insubstituível.</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">1</div>
+        <div class="step-b">
+          <div class="step-t">Transfere 10&euro; por MBWay</div>
+          <div class="step-d">Usa o número abaixo. Na descrição escreve o teu nome.</div>
+          <div class="mbway">
+            <div>
+              <div class="mbway-lbl">MBWay · Alice Cláudia</div>
+              <div class="mbway-num">913 305 225</div>
+            </div>
+            <button class="copy-btn" onclick="navigator.clipboard.writeText('913305225');this.textContent='Copiado!'">Copiar</button>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">2</div>
+        <div class="step-b">
+          <div class="step-t">Confirma o pagamento abaixo</div>
+          <div class="step-d">Preenche o teu nome e email para receberes o formulário.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-b">
+          <div class="step-t">Recebe a ficha de orientação personalizada</div>
+          <div class="step-d">Após confirmação, preenche a ficha e envia as tuas fotos pelo Instagram.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-box">
+      <div class="form-lbl">Confirmar Pagamento</div>
+      <div class="f-grp">
+        <label class="f-lbl">O teu nome</label>
+        <input class="f-inp" type="text" id="nome" placeholder="Nome completo">
+      </div>
+      <div class="f-grp">
+        <label class="f-lbl">Email</label>
+        <input class="f-inp" type="email" id="email" placeholder="para receberes confirmação">
+      </div>
+      <div class="f-grp">
+        <label class="f-lbl">Últimos 4 dígitos do número de onde transferiste</label>
+        <input class="f-inp" type="tel" id="tel" placeholder="ex: 7832" maxlength="4">
+      </div>
+      <button class="btn-main" id="btnOk" onclick="confirmar()">Confirmar e aceder ao formulário &rarr;</button>
+    </div>
+
+    <div class="footer">Alice Cláudia · Ópticas Luz · alice_mjpr@hotmail.com</div>
+
+  </div>
+</div>
+
+<div id="suc">
+  <div class="wrap">
+    <span class="suc-ico">✨</span>
+    <div class="suc-title">Obrigada, <span id="sucNome"></span>!</div>
+    <p class="suc-sub">O teu formulário de orientação personalizada está pronto.<br>Clica abaixo para o preencher agora.</p>
+    <div class="suc-note">📸 <strong>Antes de submeter a ficha,</strong> envia uma foto natural e bem visível do teu rosto por mensagem directa no Instagram <strong>@alice_claudia_almeida</strong>. A tua orientação será enviada em até 48 horas.</div>
+    <a href="https://alicemjpr-png.github.io/alice-claudia/ficha-consultoria.html" class="btn-link" target="_blank">✏️&nbsp; Abrir ficha de orientação personalizada</a>
+  </div>
+</div>
+
+<script>
+function confirmar(){
+  var nome = document.getElementById('nome').value.trim();
+  var email = document.getElementById('email').value.trim();
+  var tel = document.getElementById('tel').value.trim();
+  if(nome.length < 2){ alert('Por favor preenche o teu nome.'); return; }
+  if(email.indexOf('@') < 1){ alert('Por favor preenche um email válido.'); return; }
+  if(tel.length < 4){ alert('Por favor preenche os 4 dígitos do teu número.'); return; }
+  document.getElementById('sucNome').textContent = nome;
+  document.getElementById('main').style.display = 'none';
+  document.getElementById('suc').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
