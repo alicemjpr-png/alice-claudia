@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#faf8f5">
+<title>Ficha de Orientação Personalizada — Alice Cláudia</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --bg: #faf8f5;
+  --white: #ffffff;
+  --ink: #1c1a18;
+  --ink2: #3a3530;
+  --muted: #8a8480;
+  --border: #e4dfd8;
+  --gold: #b8904a;
+  --gold2: #d4aa6a;
+  --gold-bg: #fdf6ec;
+  --dark: #2a2620;
+  --red: #b05a4a;
+  --green: #4a8a5a;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: calc(80px + var(--safe-bottom));
+}
+
+.app { max-width: 600px; margin: 0 auto; }
+
+/* HEADER */
+.page-header {
+  background: var(--dark);
+  padding: 32px 24px 28px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 400px; height: 200px;
+  background: radial-gradient(ellipse, rgba(184,144,74,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.header-brand {
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--gold2);
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+.header-title {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: #f4ede4;
+  line-height: 1.2;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+.header-title em { font-style: italic; color: var(--gold2); }
+.header-sub {
+  font-size: 12px;
+  color: rgba(244,237,228,0.45);
+  position: relative;
+  z-index: 1;
+}
+
+/* PROGRESS */
+.progress-fixed {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 24px 8px;
+}
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.05em;
+}
+.progress-bar { height: 2px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+}
+
+/* SECTIONS */
+.sections { padding: 0 20px; }
+
+.section { display: none; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sec-inner { padding-top: 24px; }
+
+.sec-tag {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+  display: block;
+}
+.sec-title {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.sec-note {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  padding: 10px 14px;
+  background: var(--gold-bg);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+}
+
+/* FIELD GROUPS */
+.field-group { margin-bottom: 20px; }
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 8px;
+  display: block;
+}
+.field-required { color: var(--gold); margin-left: 3px; }
+
+/* TEXT INPUTS */
+.field-input {
+  width: 100%;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.field-input:focus { border-color: var(--gold); }
+.field-input::placeholder { color: var(--muted); }
+
+textarea.field-input {
+  resize: none;
+  min-height: 90px;
+  line-height: 1.6;
+}
+
+/* TWO COL INPUTS */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 400px) { .two-col { grid-template-columns: 1fr; } }
+
+/* CHECKBOX OPTIONS */
+.check-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.check-grid.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+@media (max-width: 400px) { .check-grid.grid2 { grid-template-columns: 1fr; } }
+
+.check-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+  min-height: 48px;
+}
+.check-opt:active { transform: scale(0.985); }
+.check-opt.selected { border-color: var(--gold); background: var(--gold-bg); }
+
+.check-box {
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  border: 1.5px solid var(--border);
+  flex-shrink: 0;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: transparent;
+}
+.check-opt.selected .check-box {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: white;
+}
+.check-opt.selected .check-box::after { content: '✓'; }
+
+.check-text {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.check-opt.selected .check-text { color: var(--ink); }
+
+/* RADIO OPTIONS (single select) */
+.radio-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-user-select: none;
+  user-select: none;
+  min-height: 48px;
+}
+.radio-opt:active { transform: scale(0.985); }
+.radio-opt.selected { border-color: var(--gold); background: var(--gold-bg); }
+
+.radio-circle {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  flex-shrink: 0;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.radio-opt.selected .radio-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.radio-opt.selected .radio-circle::after {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: white;
+}
+.radio-text { font-size: 14px; color: var(--ink); line-height: 1.3; }
+
+/* DIVIDER */
+.field-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0;
+}
+
+/* CONSULTORA BLOCK */
+.consultora-block {
+  background: var(--dark);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.consultora-tag {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  margin-bottom: 12px;
+  display: block;
+}
+.consultora-block .field-label { color: rgba(244,237,228,0.7); }
+.consultora-block .field-input {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(184,144,74,0.2);
+  color: #f4ede4;
+}
+.consultora-block .field-input:focus { border-color: var(--gold); }
+.consultora-block .field-input::placeholder { color: rgba(244,237,228,0.3); }
+.consultora-block .check-opt {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(244,237,228,0.1);
+}
+.consultora-block .check-opt.selected {
+  border-color: rgba(184,144,74,0.5);
+  background: rgba(184,144,74,0.1);
+}
+.consultora-block .check-text { color: rgba(244,237,228,0.8); }
+.consultora-block .check-opt.selected .check-text { color: var(--gold2); }
+
+/* BOTTOM BAR */
+.btn-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  padding: 10px 20px calc(10px + var(--safe-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  z-index: 30;
+  max-width: 600px;
+  margin: 0 auto;
+}
+@media (min-width: 600px) {
+  .btn-bar { left: 50%; transform: translateX(-50%); width: 600px; }
+}
+
+.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  min-height: 52px;
+  transition: all 0.15s;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--gold); color: white; flex: 1; }
+.btn-primary:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+.btn-back { background: transparent; color: var(--muted); border: 1.5px solid var(--border); flex: 0 0 auto; padding: 15px 18px; font-size: 18px; }
+
+/* RESULTADO */
+#result { display: none; padding: 0 20px 40px; }
+#result.visible { display: block; animation: fadeIn 0.5s ease; }
+
+.result-hero {
+  background: var(--dark);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin: 20px 0 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.result-hero::before {
+  content: '';
+  position: absolute;
+  top: -40px; left: 50%;
+  transform: translateX(-50%);
+  width: 300px; height: 200px;
+  background: radial-gradient(ellipse, rgba(184,144,74,0.1) 0%, transparent 70%);
+}
+.result-icon { font-size: 36px; margin-bottom: 12px; display: block; position: relative; z-index: 1; }
+.result-title { font-family: 'Lora', serif; font-size: 22px; font-weight: 400; color: #f4ede4; margin-bottom: 4px; position: relative; z-index: 1; }
+.result-title em { font-style: italic; color: var(--gold2); }
+.result-sub { font-size: 13px; color: rgba(244,237,228,0.5); position: relative; z-index: 1; }
+
+.result-section { margin-bottom: 24px; }
+.result-sec-title {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 400px) { .result-grid { grid-template-columns: 1fr; } }
+
+.result-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+.result-card.gold { border-color: rgba(184,144,74,0.4); background: var(--gold-bg); }
+.rc-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.rc-value { font-family: 'Lora', serif; font-size: 15px; color: var(--ink); line-height: 1.3; }
+.result-card.gold .rc-value { color: var(--gold); }
+
+.result-text-field {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.rtf-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.rtf-value { font-size: 14px; color: var(--ink); line-height: 1.6; min-height: 20px; }
+
+.result-recs {
+  background: var(--dark);
+  border-radius: 12px;
+  padding: 22px 20px;
+  margin-bottom: 20px;
+}
+.recs-title {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold2);
+  margin-bottom: 16px;
+}
+.rec-item { margin-bottom: 12px; }
+.rec-label { font-size: 11px; color: rgba(244,237,228,0.4); margin-bottom: 2px; }
+.rec-value {
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  color: #f4ede4;
+  min-height: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(244,237,228,0.1);
+}
+
+.btn-nova {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  min-height: 52px;
+  margin-bottom: 20px;
+}
+.btn-nova:active { border-color: var(--muted); color: var(--ink); }
+
+.btn-imprimir {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  background: var(--gold);
+  color: white;
+  cursor: pointer;
+  min-height: 52px;
+  margin-bottom: 8px;
+}
+
+.footer { text-align: center; font-size: 11px; color: var(--muted); padding: 16px 0 0; }
+
+@media print {
+  .btn-bar, .progress-fixed, .btn-nova, .btn-imprimir { display: none !important; }
+  body { padding-bottom: 0; }
+  .section { display: block !important; }
+  #result { display: block !important; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="page-header">
+    <div class="header-brand">Alice Cláudia · Ópticas Luz</div>
+    <div class="header-title">Ficha de <em>Orientação Personalizada</em></div>
+    <div class="header-sub">Preenchida em conjunto durante a consulta</div>
+  </div>
+
+  <div id="formulario">
+    <div class="progress-fixed">
+      <div class="progress-row">
+        <span id="secLabel">Secção 1 de 7</span>
+        <span id="secPct">14%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:14%"></div>
+      </div>
+    </div>
+
+    <div class="sections">
+
+      <!-- SEC 1 — DADOS -->
+      <div class="section active" id="sec1">
+        <div class="sec-inner">
+          <span class="sec-tag">01 — Identificação</span>
+          <div class="sec-title">Dados do Cliente</div>
+          <div style="height:16px"></div>
+
+          <div class="field-group">
+            <label class="field-label">Nome completo <span class="field-required">*</span></label>
+            <input class="field-input" type="text" id="nome" placeholder="Nome do cliente" oninput="checkSec1()">
+          </div>
+
+          <div class="two-col">
+            <div class="field-group">
+              <label class="field-label">Idade</label>
+              <input class="field-input" type="number" id="idade" placeholder="ex: 34" min="1" max="120">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Data</label>
+              <input class="field-input" type="date" id="dataConsulta">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Email <span style="color:#b05a4a">*</span></label>
+            <input class="field-input" type="email" id="email" placeholder="email da cliente" required>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Telefone</label>
+            <input class="field-input" type="text" id="telefone" placeholder="número de telefone">
+          </div>
+        </div>
+      </div>
+
+      <!-- SEC 2 — CONTEXTO -->
+      <div class="section" id="sec2">
+        <div class="sec-inner">
+          <span class="sec-tag">02 — Uso</span>
+          <div class="sec-title">Contexto de Uso</div>
+          <div class="sec-note">Define o que vem primeiro: durabilidade, leveza ou liberdade estética.</div>
+
+          <div class="field-group">
+            <label class="field-label">Para que vai usar estes óculos? <span class="field-required">*</span></label>
+            <div class="check-grid grid2" id="usoCheck">
+              <div class="check-opt" onclick="toggleCheck(this,'uso','grau')"><div class="check-box"></div><span class="check-text">Uso diário com graduação</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'uso','sol')"><div class="check-box"></div><span class="check-text">Óculos de sol</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'uso','leitura')"><div class="check-box"></div><span class="check-text">Leitura / Ocasional</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'uso','digital')"><div class="check-box"></div><span class="check-text">Protecção digital</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'uso','conducao')"><div class="check-box"></div><span class="check-text">Condução</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'uso','desporto')"><div class="check-box"></div><span class="check-text">Desporto</span></div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Imagem que quer transmitir</label>
+            <div class="check-grid grid2" id="imagemCheck">
+              <div class="check-opt" onclick="toggleCheck(this,'imagem','profissional')"><div class="check-box"></div><span class="check-text">Profissional</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'imagem','casual')"><div class="check-box"></div><span class="check-text">Descontraída</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'imagem','fashion')"><div class="check-box"></div><span class="check-text">Fashion</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'imagem','discreta')"><div class="check-box"></div><span class="check-text">Discreta</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEC 3 — OBSERVAÇÃO (CONSULTORA) -->
+      <div class="section" id="sec3">
+        <div class="sec-inner">
+          <span class="sec-tag">03 — Técnica</span>
+          <div class="sec-title">Observação do Rosto</div>
+          <div class="sec-note">Preenchido pela consultora. Base técnica para a recomendação — não é análise de visagismo.</div>
+
+          <div class="consultora-block">
+            <span class="consultora-tag">Consultora preenche</span>
+
+            <div class="field-group">
+              <label class="field-label">Geometria do rosto</label>
+              <div class="check-grid" id="rostoCheck">
+                <div class="check-opt" onclick="radioCheck(this,'rosto','oval')"><div class="radio-circle"></div><span class="check-text">Oval</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'rosto','redondo')"><div class="radio-circle"></div><span class="check-text">Redondo</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'rosto','quadrado')"><div class="radio-circle"></div><span class="check-text">Quadrado / Angular</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'rosto','coracao')"><div class="radio-circle"></div><span class="check-text">Coração / Triângulo</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'rosto','alongado')"><div class="radio-circle"></div><span class="check-text">Alongado</span></div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Contraste pessoal</label>
+              <div class="check-grid" id="contrasteCheck">
+                <div class="check-opt" onclick="radioCheck(this,'contraste','alto')"><div class="radio-circle"></div><span class="check-text">Alto — pele clara + cabelo escuro</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'contraste','medio')"><div class="radio-circle"></div><span class="check-text">Médio — tons equilibrados</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'contraste','baixo')"><div class="radio-circle"></div><span class="check-text">Baixo — tons suaves e próximos</span></div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Sobrancelhas</label>
+              <div class="check-grid" id="sobrancelhaCheck">
+                <div class="check-opt" onclick="radioCheck(this,'sobrancelha','marcadas')"><div class="radio-circle"></div><span class="check-text">Marcadas / Espessas</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'sobrancelha','normais')"><div class="radio-circle"></div><span class="check-text">Normais</span></div>
+                <div class="check-opt" onclick="radioCheck(this,'sobrancelha','suaves')"><div class="radio-circle"></div><span class="check-text">Suaves / Claras</span></div>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label class="field-label">Notas de observação</label>
+              <textarea class="field-input" id="notasRosto" placeholder="Observações adicionais sobre o rosto..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEC 4 — PREFERÊNCIAS -->
+      <div class="section" id="sec4">
+        <div class="sec-inner">
+          <span class="sec-tag">04 — Estética</span>
+          <div class="sec-title">Preferências do Cliente</div>
+          <div style="height:16px"></div>
+
+          <div class="field-group">
+            <label class="field-label">Formas de armação que mais atraem</label>
+            <div class="check-grid grid2" id="formaCheck">
+              <div class="check-opt" onclick="toggleCheck(this,'forma','arredondadas')"><div class="check-box"></div><span class="check-text">Arredondadas / Ovais</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'forma','quadradas')"><div class="check-box"></div><span class="check-text">Quadradas / Rect.</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'forma','cateye')"><div class="check-box"></div><span class="check-text">Cat-eye</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'forma','aviador')"><div class="check-box"></div><span class="check-text">Aviador</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'forma','geometricas')"><div class="check-box"></div><span class="check-text">Geométricas</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'forma','sempreferencia')"><div class="check-box"></div><span class="check-text">Sem preferência</span></div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Cores preferidas</label>
+            <div class="check-grid grid2" id="corCheck">
+              <div class="check-opt" onclick="toggleCheck(this,'cor','preto')"><div class="check-box"></div><span class="check-text">Preto / Grafite</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'cor','havana')"><div class="check-box"></div><span class="check-text">Tartaruga / Havana</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'cor','metalico')"><div class="check-box"></div><span class="check-text">Metálicos</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'cor','neutros')"><div class="check-box"></div><span class="check-text">Tons neutros</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'cor','azulverde')"><div class="check-box"></div><span class="check-text">Azul / Verde escuro</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'cor','vivas')"><div class="check-box"></div><span class="check-text">Cores vivas</span></div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Presença visual desejada</label>
+            <div class="check-grid" id="presencaCheck">
+              <div class="check-opt" onclick="radioCheck(this,'presenca','discreta')"><div class="radio-circle"></div><span class="check-text">Discreta — integra-se no rosto</span></div>
+              <div class="check-opt" onclick="radioCheck(this,'presenca','presente')"><div class="radio-circle"></div><span class="check-text">Com presença — faz parte do look</span></div>
+              <div class="check-opt" onclick="radioCheck(this,'presenca','tantofaz')"><div class="radio-circle"></div><span class="check-text">Tanto faz</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEC 5 — HISTÓRICO -->
+      <div class="section" id="sec5">
+        <div class="sec-inner">
+          <span class="sec-tag">05 — Referências</span>
+          <div class="sec-title">Histórico e Referências</div>
+          <div style="height:16px"></div>
+
+          <div class="field-group">
+            <label class="field-label">Óculos anteriores que gostou</label>
+            <textarea class="field-input" id="gostou" placeholder="Modelos, marcas, características que gostou..."></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Óculos que não a representaram (e porquê)</label>
+            <textarea class="field-input" id="naoGostou" placeholder="O que não funcionou e porquê..."></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Referências ou inspirações</label>
+            <textarea class="field-input" id="referencias" placeholder="Celebridades, imagens, modelos de referência..."></textarea>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Aberta a sugestões fora da zona de conforto?</label>
+            <div class="check-grid" id="zonaCheck">
+              <div class="check-opt" onclick="radioCheck(this,'zona','sim')"><div class="radio-circle"></div><span class="check-text">Sim, totalmente</span></div>
+              <div class="check-opt" onclick="radioCheck(this,'zona','simlimites')"><div class="radio-circle"></div><span class="check-text">Sim, com alguns limites</span></div>
+              <div class="check-opt" onclick="radioCheck(this,'zona','nao')"><div class="radio-circle"></div><span class="check-text">Prefiro o que já conheço</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEC 6 — TÉCNICA -->
+      <div class="section" id="sec6">
+        <div class="sec-inner">
+          <span class="sec-tag">06 — Lente</span>
+          <div class="sec-title">Necessidades Técnicas</div>
+          <div style="height:16px"></div>
+
+          <div class="field-group">
+            <label class="field-label">Tipo de lente necessária</label>
+            <div class="check-grid grid2" id="lenteCheck">
+              <div class="check-opt" onclick="toggleCheck(this,'lente','monofocal')"><div class="check-box"></div><span class="check-text">Monofocal</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'lente','progressiva')"><div class="check-box"></div><span class="check-text">Progressiva</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'lente','leitura')"><div class="check-box"></div><span class="check-text">Leitura</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'lente','digital')"><div class="check-box"></div><span class="check-text">Protecção digital</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'lente','solar')"><div class="check-box"></div><span class="check-text">Solar com graduação</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'lente','nao')"><div class="check-box"></div><span class="check-text">Ainda não definido</span></div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Desconforto com óculos anteriores?</label>
+            <div class="check-grid" id="desconfortoCheck">
+              <div class="check-opt" onclick="radioCheck(this,'desconforto','nao')"><div class="radio-circle"></div><span class="check-text">Não</span></div>
+              <div class="check-opt" onclick="radioCheck(this,'desconforto','temporas')"><div class="radio-circle"></div><span class="check-text">Pressão nas têmporas / orelhas</span></div>
+              <div class="check-opt" onclick="radioCheck(this,'desconforto','nariz')"><div class="radio-circle"></div><span class="check-text">Peso ou pressão no nariz</span></div>
+              <div class="check-opt" onclick="radioCheck(this,'desconforto','outro')"><div class="radio-circle"></div><span class="check-text">Outro</span></div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Sensibilidade a materiais?</label>
+            <div class="check-grid grid2" id="materialCheck">
+              <div class="check-opt" onclick="toggleCheck(this,'material','nenhuma')"><div class="check-box"></div><span class="check-text">Nenhuma conhecida</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'material','metal')"><div class="check-box"></div><span class="check-text">Metal</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'material','acetato')"><div class="check-box"></div><span class="check-text">Acetato</span></div>
+              <div class="check-opt" onclick="toggleCheck(this,'material','outro')"><div class="check-box"></div><span class="check-text">Outro</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEC 7 — RECOMENDAÇÕES -->
+      <div class="section" id="sec7">
+        <div class="sec-inner">
+          <span class="sec-tag">07 — Conclusão</span>
+          <div class="sec-title">Recomendações da Consultora</div>
+          <div class="sec-note">Preenche depois de ouvir tudo. Este é o coração da consulta.</div>
+
+          <div class="consultora-block">
+            <span class="consultora-tag">Consultora preenche</span>
+
+            <div class="field-group">
+              <label class="field-label">Formatos de armação recomendados</label>
+              <textarea class="field-input" id="recFormatos" placeholder="ex: Oval fino, rectangular suave..."></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Cores sugeridas</label>
+              <textarea class="field-input" id="recCores" placeholder="ex: Havana médio, azul petróleo, grafite..."></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Material e índice de lente</label>
+              <input class="field-input" type="text" id="recMaterial" placeholder="ex: Acetato fino, índice 1.67...">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Modelos indicados</label>
+              <textarea class="field-input" id="recModelos" placeholder="Referências específicas para mostrar..."></textarea>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Observações adicionais</label>
+              <textarea class="field-input" id="recObs" placeholder="Notas livres da consultora..."></textarea>
+            </div>
+          </div>
+
+          <div class="field-divider"></div>
+
+          <div class="field-group">
+            <label class="field-label">Modelo escolhido</label>
+            <input class="field-input" type="text" id="modeloFinal" placeholder="Modelo / referência final">
+          </div>
+          <div class="two-col">
+            <div class="field-group">
+              <label class="field-label">Marca</label>
+              <input class="field-input" type="text" id="marcaFinal" placeholder="Marca">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Lente</label>
+              <input class="field-input" type="text" id="lenteFinal" placeholder="Lente seleccionada">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /sections -->
+
+    <div class="btn-bar">
+      <button class="btn btn-back" id="btnBack" onclick="voltar()" style="display:none">←</button>
+      <button class="btn btn-primary" id="btnNext" onclick="avancar()">Continuar →</button>
+    </div>
+  </div><!-- /formulario -->
+
+  <!-- RESULTADO FINAL -->
+  <div id="result">
+    <div class="result-hero">
+      <span class="result-icon">🕶️</span>
+      <div class="result-title">Consulta <em>concluída</em></div>
+      <div class="result-sub" id="resultSub"></div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-sec-title">Cliente</div>
+      <div class="result-grid">
+        <div class="result-card"><div class="rc-label">Nome</div><div class="rc-value" id="rNome">—</div></div>
+        <div class="result-card"><div class="rc-label">Data</div><div class="rc-value" id="rData">—</div></div>
+      </div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-sec-title">Perfil técnico</div>
+      <div class="result-grid">
+        <div class="result-card gold"><div class="rc-label">Rosto</div><div class="rc-value" id="rRosto">—</div></div>
+        <div class="result-card gold"><div class="rc-label">Contraste</div><div class="rc-value" id="rContraste">—</div></div>
+        <div class="result-card"><div class="rc-label">Sobrancelhas</div><div class="rc-value" id="rSobrancelha">—</div></div>
+        <div class="result-card"><div class="rc-label">Presença visual</div><div class="rc-value" id="rPresenca">—</div></div>
+      </div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-sec-title">Preferências</div>
+      <div class="result-text-field"><div class="rtf-label">Formas preferidas</div><div class="rtf-value" id="rFormas">—</div></div>
+      <div class="result-text-field"><div class="rtf-label">Cores preferidas</div><div class="rtf-value" id="rCores">—</div></div>
+      <div class="result-text-field"><div class="rtf-label">Uso principal</div><div class="rtf-value" id="rUso">—</div></div>
+    </div>
+
+    <div class="result-recs">
+      <div class="recs-title">Recomendações da Consultora</div>
+      <div class="rec-item"><div class="rec-label">Formatos</div><div class="rec-value" id="rRecFormatos">—</div></div>
+      <div class="rec-item"><div class="rec-label">Cores</div><div class="rec-value" id="rRecCores">—</div></div>
+      <div class="rec-item"><div class="rec-label">Material / Lente</div><div class="rec-value" id="rRecMaterial">—</div></div>
+      <div class="rec-item"><div class="rec-label">Modelos indicados</div><div class="rec-value" id="rRecModelos">—</div></div>
+      <div class="rec-item" style="border:none"><div class="rec-label">Observações</div><div class="rec-value" style="border:none" id="rRecObs">—</div></div>
+    </div>
+
+    <div class="result-section">
+      <div class="result-sec-title">Resultado Final</div>
+      <div class="result-grid">
+        <div class="result-card gold"><div class="rc-label">Modelo escolhido</div><div class="rc-value" id="rModelo">—</div></div>
+        <div class="result-card gold"><div class="rc-label">Marca</div><div class="rc-value" id="rMarca">—</div></div>
+      </div>
+    </div>
+
+    <div id="envioStatus" style="margin:20px 0;padding:16px 20px;border-radius:12px;text-align:center;font-size:15px;font-weight:500;background:#f0f7f2;border:1.5px solid #b0d9be;color:#3a7a4a;display:none"></div>
+    <div id="envioLoading" style="text-align:center;font-size:13px;color:var(--muted);margin:16px 0;font-style:italic">A enviar ficha...</div>
+
+    <button class="btn-imprimir" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+    <button class="btn-nova" onclick="reiniciar()">← Nova consulta</button>
+
+    <div class="footer">Alice Cláudia · Ópticas Luz · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="98f9f4f1fbfdb6f5f2e8ead8fff5f9f1f4b6fbf7f5">[email&#160;protected]</a></div>
+  </div>
+
+</div><!-- /app -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const dados = {};
+const total = 7;
+let secActual = 1;
+
+// Multi-select
+function toggleCheck(el, chave, valor) {
+  el.classList.toggle('selected');
+  if (!dados[chave]) dados[chave] = [];
+  const idx = dados[chave].indexOf(valor);
+  if (idx === -1) dados[chave].push(valor);
+  else dados[chave].splice(idx, 1);
+}
+
+// Single-select (radio)
+function radioCheck(el, chave, valor) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.check-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  dados[chave] = valor;
+}
+
+function checkSec1() {
+  // auto-enable — validation happens on advance
+}
+
+function actualizarUI() {
+  const pct = Math.round((secActual / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('secLabel').textContent = 'Secção ' + secActual + ' de ' + total;
+  document.getElementById('secPct').textContent = pct + '%';
+  document.getElementById('btnBack').style.display = secActual > 1 ? 'block' : 'none';
+  const btn = document.getElementById('btnNext');
+  btn.textContent = secActual === total ? 'Concluir consulta →' : 'Continuar →';
+}
+
+function avancar() {
+  // Validate sec 1
+  if (secActual === 1 && !document.getElementById('nome').value.trim()) {
+    document.getElementById('nome').focus();
+    document.getElementById('nome').style.borderColor = 'var(--red)';
+    setTimeout(() => document.getElementById('nome').style.borderColor = '', 1500);
+    return;
+  }
+  if (secActual === total) { mostrarResultado(); return; }
+  document.getElementById('sec' + secActual).classList.remove('active');
+  secActual++;
+  document.getElementById('sec' + secActual).classList.add('active');
+  actualizarUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function voltar() {
+  if (secActual <= 1) return;
+  document.getElementById('sec' + secActual).classList.remove('active');
+  secActual--;
+  document.getElementById('sec' + secActual).classList.add('active');
+  actualizarUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const rostoLabel = { oval: 'Oval', redondo: 'Redondo', quadrado: 'Quadrado / Angular', coracao: 'Coração / Triângulo', alongado: 'Alongado' };
+const contrasteLabel = { alto: 'Alto contraste', medio: 'Contraste médio', baixo: 'Baixo contraste' };
+const sobrancelhaLabel = { marcadas: 'Marcadas', normais: 'Normais', suaves: 'Suaves / Claras' };
+const presencaLabel = { discreta: 'Discreta', presente: 'Com presença', tantofaz: 'Indiferente' };
+
+function val(id) { return document.getElementById(id)?.value?.trim() || '—'; }
+function arr(key) { return (dados[key] || []).join(', ') || '—'; }
+function single(key, map) { return map[dados[key]] || '—'; }
+
+function mostrarResultado() {
+  document.getElementById('formulario').style.display = 'none';
+  const r = document.getElementById('result');
+  r.classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const nome = val('nome');
+  const data = val('dataConsulta');
+
+  document.getElementById('resultSub').textContent = nome + (data !== '—' ? ' · ' + data : '');
+  document.getElementById('rNome').textContent = nome;
+  document.getElementById('rData').textContent = data;
+  document.getElementById('rRosto').textContent = single('rosto', rostoLabel);
+  document.getElementById('rContraste').textContent = single('contraste', contrasteLabel);
+  document.getElementById('rSobrancelha').textContent = single('sobrancelha', sobrancelhaLabel);
+  document.getElementById('rPresenca').textContent = single('presenca', presencaLabel);
+  document.getElementById('rFormas').textContent = arr('forma');
+  document.getElementById('rCores').textContent = arr('cor');
+  document.getElementById('rUso').textContent = arr('uso');
+  document.getElementById('rRecFormatos').textContent = val('recFormatos');
+  document.getElementById('rRecCores').textContent = val('recCores');
+  document.getElementById('rRecMaterial').textContent = val('recMaterial');
+  document.getElementById('rRecModelos').textContent = val('recModelos');
+  document.getElementById('rRecObs').textContent = val('recObs');
+  document.getElementById('rModelo').textContent = val('modeloFinal');
+  document.getElementById('rMarca').textContent = val('marcaFinal');
+
+  // Enviar para Formspree
+  const payload = {
+    _subject: 'Nova ficha de orientação personalizada — ' + nome + ' | ' + (val('email') || 'sem email'),
+    _confirmation: 'Olá! A tua ficha de orientação personalizada foi recebida com sucesso. A Alice Cláudia irá analisar as tuas respostas e entrar em contacto em breve. Obrigada!',
+    nome: nome,
+    data: data,
+    _replyto: val('email') || 'alice_mjpr@hotmail.com',
+    email_cliente: val('email') || 'nao indicado',
+    telefone: val('telefone') || '—',
+    rosto: single('rosto', rostoLabel),
+    contraste: single('contraste', contrasteLabel),
+    sobrancelhas: single('sobrancelha', sobrancelhaLabel),
+    presenca_visual: single('presenca', presencaLabel),
+    formas_preferidas: arr('forma'),
+    cores_preferidas: arr('cor'),
+    uso_principal: arr('uso'),
+    rec_formatos: val('recFormatos') || '—',
+    rec_cores: val('recCores') || '—',
+    rec_material: val('recMaterial') || '—',
+    rec_modelos: val('recModelos') || '—',
+    rec_observacoes: val('recObs') || '—',
+    modelo_final: val('modeloFinal') || '—',
+    marca_final: val('marcaFinal') || '—'
+  };
+
+  var formData = new FormData();
+  Object.keys(payload).forEach(function(k){ formData.append(k, payload[k]); });
+
+  fetch('https://formspree.io/f/xpqjvzwn', {
+    method: 'POST',
+    body: formData,
+    headers: { 'Accept': 'application/json' }
+  }).then(function(response) {
+    var box = document.getElementById('envioStatus');
+    var loading = document.getElementById('envioLoading');
+    loading.style.display = 'none';
+    box.style.display = 'block';
+    if (response.ok) {
+      box.textContent = '✓ Ficha enviada com sucesso!';
+      box.style.background = '#f0f7f2';
+      box.style.border = '1.5px solid #b0d9be';
+      box.style.color = '#3a7a4a';
+    } else {
+      response.json().then(function(data) {
+        var msg = data.errors ? data.errors.map(function(e){return e.message}).join(', ') : ('Código: ' + response.status);
+        box.textContent = '⚠ ' + msg;
+        box.style.background = '#fdf3f0';
+        box.style.border = '1.5px solid #e0b0a0';
+        box.style.color = '#b05a4a';
+      });
+    }
+  }).catch(function(err) {
+    var box = document.getElementById('envioStatus');
+    var loading = document.getElementById('envioLoading');
+    loading.style.display = 'none';
+    box.style.display = 'block';
+    box.textContent = '⚠ Sem ligação: ' + (err ? err.toString() : 'erro desconhecido');
+    box.style.background = '#fdf3f0';
+    box.style.border = '1.5px solid #e0b0a0';
+    box.style.color = '#b05a4a';
+  });
+}
+
+function reiniciar() {
+  Object.keys(dados).forEach(k => delete dados[k]);
+  secActual = 1;
+  document.querySelectorAll('.field-input').forEach(el => { el.value = ''; });
+  document.querySelectorAll('.check-opt').forEach(el => el.classList.remove('selected'));
+  document.getElementById('formulario').style.display = 'block';
+  document.getElementById('result').classList.remove('visible');
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec1').classList.add('active');
+  actualizarUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('dataConsulta').valueAsDate = new Date();
+actualizarUI();
+</script>
+</body>
+</html>

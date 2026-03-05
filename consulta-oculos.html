@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#faf8f5">
+<title>O teu diagnóstico de armação</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #faf8f5;
+  --white: #ffffff;
+  --ink: #1c1a18;
+  --muted: #8a8480;
+  --border: #e4dfd8;
+  --gold: #b8904a;
+  --gold-light: #d4aa6a;
+  --gold-bg: #fdf6ec;
+  --red: #b05a4a;
+  --dark: #2a2620;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* LAYOUT */
+.app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 0 calc(100px + var(--safe-bottom));
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  padding: 48px 24px 0;
+  margin-bottom: 40px;
+}
+.header-icon { font-size: 44px; margin-bottom: 18px; display: block; }
+.header h1 {
+  font-family: 'Lora', serif;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+.header h1 em { font-style: italic; color: var(--gold); }
+.header p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* PROGRESS BAR — fixed no topo */
+.progress-fixed {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg);
+  padding: 12px 24px 10px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+}
+.progress-bar { height: 3px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+}
+
+/* STEP CONTAINER */
+.steps-container { padding: 0 20px; }
+
+.step { display: none; }
+.step.active { display: block; animation: stepIn 0.3s ease; }
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.step-inner { padding-top: 28px; }
+
+.step-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.step-question {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.35;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.step-hint {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  line-height: 1.7;
+  padding-bottom: 4px;
+}
+
+/* OPTIONS — sempre coluna no mobile */
+.options { display: flex; flex-direction: column; gap: 10px; }
+
+/* Grid opcional para ecrãs maiores */
+@media (min-width: 480px) {
+  .options.grid2 { display: grid; grid-template-columns: 1fr 1fr; }
+  .options.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+}
+
+.opt {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 64px;
+  /* Touch target confortável */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.opt:active { transform: scale(0.985); }
+.opt.selected { border-color: var(--gold); background: var(--gold-bg); }
+
+.opt-left { flex-shrink: 0; padding-top: 2px; }
+.opt-icon { font-size: 24px; display: block; }
+
+/* Tonal demo inline */
+.tonal-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.face-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  flex-shrink: 0;
+}
+.hair-dot {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tonal-arrow { font-size: 13px; color: var(--muted); }
+
+.opt-body { flex: 1; min-width: 0; }
+.opt-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+.opt-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+.opt.selected .opt-title { color: var(--gold); }
+
+/* Check indicator */
+.opt-check {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  margin-top: 3px;
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.opt.selected .opt-check {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.opt.selected .opt-check::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: white;
+}
+
+/* BOTTOM BUTTON BAR — fixed */
+.btn-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 12px 20px calc(12px + var(--safe-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  z-index: 20;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* trick para centrar o fixed no max-width */
+@media (min-width: 520px) {
+  .btn-bar {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 520px;
+  }
+}
+
+.btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  flex: 1;
+  letter-spacing: 0.01em;
+  /* Touch targets grandes */
+  min-height: 52px;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--gold); color: white; }
+.btn-primary:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+.btn-primary:not(:disabled):active { background: var(--gold-light); }
+.btn-back {
+  background: transparent;
+  color: var(--muted);
+  border: 1.5px solid var(--border);
+  flex: 0 0 auto;
+  padding: 15px 18px;
+  font-size: 18px;
+}
+.btn-back:active { border-color: var(--muted); }
+
+/* ========================
+   RESULTADO
+======================== */
+#result { display: none; padding: 0 20px 40px; }
+#result.visible { display: block; animation: stepIn 0.4s ease; }
+
+.result-hero {
+  text-align: center;
+  padding: 36px 0 28px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+.result-check { font-size: 44px; margin-bottom: 14px; display: block; }
+.result-title {
+  font-family: 'Lora', serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.result-title em { font-style: italic; color: var(--gold); }
+.result-sub { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+/* DIAG CARDS — 1 col mobile */
+.diag-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+@media (max-width: 360px) { .diag-grid { grid-template-columns: 1fr; } }
+
+.diag-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+.diag-card.destaque { border-color: var(--gold); background: var(--gold-bg); }
+.diag-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.diag-value {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.diag-card.destaque .diag-value { color: var(--gold); }
+.diag-note { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* SECTION TITLE */
+.sec-title {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+/* FRAMES */
+.frames-wrap { margin-bottom: 28px; }
+.frames-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.frame-chip {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 13px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.frame-dot { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
+.frame-name { font-size: 13px; color: var(--ink); }
+.avoid-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.avoid-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.avoid-tag {
+  font-size: 11px;
+  color: var(--red);
+  border: 1px solid rgba(176,90,74,0.25);
+  border-radius: 6px;
+  padding: 4px 9px;
+  background: rgba(176,90,74,0.04);
+}
+
+/* USO CARDS */
+.uso-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.uso-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+.uso-card.destaque { border-color: rgba(184,144,74,0.4); background: var(--gold-bg); }
+.uso-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+.uso-tipo {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.uso-rec { font-size: 14px; color: var(--ink); line-height: 1.6; margin-bottom: 5px; }
+.uso-note { font-size: 12px; color: var(--muted); font-style: italic; }
+
+/* TEXTO PARA O CLIENTE */
+.fala-block {
+  background: var(--dark);
+  color: #f4f0e8;
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.fala-quote {
+  position: absolute;
+  top: 12px; right: 20px;
+  font-size: 56px;
+  color: rgba(184,144,74,0.1);
+  font-family: 'Lora', serif;
+  line-height: 1;
+  pointer-events: none;
+}
+.fala-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 14px;
+  display: block;
+}
+.fala-texto {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.85;
+  color: #f0ece4;
+}
+.fala-texto strong { font-style: normal; color: var(--gold-light); font-weight: 400; }
+
+/* REINICIAR */
+.reiniciar-wrap {
+  text-align: center;
+  padding: 24px 0 8px;
+  border-top: 1px solid var(--border);
+}
+.reiniciar-wrap p { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.btn-reiniciar {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 13px 28px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  min-height: 48px;
+}
+.btn-reiniciar:active { border-color: var(--muted); color: var(--ink); }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px 20px 0;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header" id="mainHeader">
+    <span class="header-icon">🕶️</span>
+    <h1>Vamos encontrar<br>a <em>armação certa</em><br>para o teu rosto.</h1>
+    <p>Seis perguntas. Um diagnóstico preciso. Sem achismos.</p>
+  </div>
+
+  <!-- QUESTIONÁRIO -->
+  <div id="questionario">
+
+    <!-- Barra de progresso sticky -->
+    <div class="progress-fixed">
+      <div class="progress-top">
+        <span id="stepLabel">Pergunta 1 de 6</span>
+        <span id="stepPct">16%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:16%"></div>
+      </div>
+    </div>
+
+    <div class="steps-container">
+
+      <!-- P1 -->
+      <div class="step active" id="step1">
+        <div class="step-inner">
+          <div class="step-tag">01 — Ponto de partida</div>
+          <div class="step-question">Para que vais usar estes óculos?</div>
+          <div class="step-hint">Não é uma pergunta de estilo — é técnica. O uso define o que vem primeiro: durabilidade, leveza ou liberdade criativa.</div>
+          <div class="options">
+            <div class="opt" onclick="seleccionar(this,'uso','grau')">
+              <div class="opt-left"><span class="opt-icon">👓</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Todos os dias</div>
+                <div class="opt-desc">O par principal, com ou sem graduação</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'uso','sol')">
+              <div class="opt-left"><span class="opt-icon">🕶️</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Óculos de sol</div>
+                <div class="opt-desc">Exterior, viagens, condução</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'uso','leitura')">
+              <div class="opt-left"><span class="opt-icon">📖</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Leitura ou ocasional</div>
+                <div class="opt-desc">Uso pontual, não é o par do dia-a-dia</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="step" id="step2">
+        <div class="step-inner">
+          <div class="step-tag">02 — Contraste tonal</div>
+          <div class="step-question">Imagina o teu rosto em preto e branco. A pele e o cabelo ficam com tons próximos ou muito diferentes?</div>
+          <div class="step-hint">Esquece as cores por um momento — o que interessa é a distância tonal. Este passo é o núcleo do diagnóstico.</div>
+          <div class="options">
+            <div class="opt" onclick="seleccionar(this,'contraste','baixo')">
+              <div class="opt-left">
+                <div class="tonal-row">
+                  <div class="face-dot" style="background:#d8d0c4;"></div>
+                  <span class="tonal-arrow">↔</span>
+                  <div class="hair-dot" style="background:#beb6aa;"></div>
+                </div>
+              </div>
+              <div class="opt-body">
+                <div class="opt-title">Próximos — pouca diferença</div>
+                <div class="opt-desc">Louro, ruivo claro ou grisalho. Pele e cabelo quase no mesmo tom.</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'contraste','medio')">
+              <div class="opt-left">
+                <div class="tonal-row">
+                  <div class="face-dot" style="background:#d0c8bc;"></div>
+                  <span class="tonal-arrow">↔</span>
+                  <div class="hair-dot" style="background:#584840;"></div>
+                </div>
+              </div>
+              <div class="opt-body">
+                <div class="opt-title">Diferença visível, sem extremos</div>
+                <div class="opt-desc">Castanho médio, louro escuro. Há contraste — mas não choca.</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'contraste','alto')">
+              <div class="opt-left">
+                <div class="tonal-row">
+                  <div class="face-dot" style="background:#e8e0d4;"></div>
+                  <span class="tonal-arrow">↔</span>
+                  <div class="hair-dot" style="background:#181410;"></div>
+                </div>
+              </div>
+              <div class="opt-body">
+                <div class="opt-title">Grande contraste — muito distantes</div>
+                <div class="opt-desc">Pele clara com cabelo muito escuro, ou pele escura com traços marcados.</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="step" id="step3">
+        <div class="step-inner">
+          <div class="step-tag">03 — Sobrancelhas</div>
+          <div class="step-question">Como são as tuas sobrancelhas naturais — sem preenchimento, sem correção?</div>
+          <div class="step-hint">Este detalhe muda o diagnóstico. Sobrancelhas espessas criam contraste facial mesmo num rosto de cabelo claro.</div>
+          <div class="options">
+            <div class="opt" onclick="seleccionar(this,'sobrancelha','suave')">
+              <div class="opt-left"><span class="opt-icon">〰️</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Suaves ou claras</div>
+                <div class="opt-desc">Finas, pouco definidas ou de cor clara</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'sobrancelha','media')">
+              <div class="opt-left"><span class="opt-icon">➖</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Normais</div>
+                <div class="opt-desc">Definidas, presença moderada no rosto</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'sobrancelha','marcada')">
+              <div class="opt-left"><span class="opt-icon">⬛</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Marcadas ou espessas</div>
+                <div class="opt-desc">Muito visíveis, dominam a expressão do rosto</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="step" id="step4">
+        <div class="step-inner">
+          <div class="step-tag">04 — Geometria do rosto</div>
+          <div class="step-question">Olha para a testa, as maçãs do rosto e o queixo. Qual é a forma que descreve melhor o conjunto?</div>
+          <div class="step-hint">Não precisas de ter a certeza absoluta — escolhe o que mais se aproxima. A armação vai complementar, nunca replicar.</div>
+          <div class="options">
+            <div class="opt" onclick="seleccionar(this,'rosto','oval')">
+              <div class="opt-left"><span class="opt-icon">🥚</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Oval</div>
+                <div class="opt-desc">Proporções equilibradas, testa ligeiramente mais larga que o queixo</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'rosto','redondo')">
+              <div class="opt-left"><span class="opt-icon">⭕</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Redondo</div>
+                <div class="opt-desc">Maçãs largas, queixo arredondado, sem ângulos fortes</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'rosto','quadrado')">
+              <div class="opt-left"><span class="opt-icon">⬜</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Quadrado ou angular</div>
+                <div class="opt-desc">Testa, maçãs e queixo com largura similar, maxilar marcado</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'rosto','coracao')">
+              <div class="opt-left"><span class="opt-icon">🔻</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Coração ou triângulo</div>
+                <div class="opt-desc">Testa larga, queixo estreito e pontiagudo</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P5 -->
+      <div class="step" id="step5">
+        <div class="step-inner">
+          <div class="step-tag">05 — Expressão pessoal</div>
+          <div class="step-question">Como te defines no dia-a-dia?</div>
+          <div class="step-hint">Entre opções tecnicamente equivalentes, o estilo desempata. Não há resposta errada — há a tua.</div>
+          <div class="options">
+            <div class="opt" onclick="seleccionar(this,'estilo','classico')">
+              <div class="opt-left"><span class="opt-icon">🎩</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Clássico e atemporal</div>
+                <div class="opt-desc">Preferes peças que durem, que combinam com tudo</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'estilo','moderno')">
+              <div class="opt-left"><span class="opt-icon">◻️</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Moderno e minimalista</div>
+                <div class="opt-desc">Linhas limpas, sem excessos, contemporâneo</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'estilo','criativo')">
+              <div class="opt-left"><span class="opt-icon">✨</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Criativo e expressivo</div>
+                <div class="opt-desc">Gostas de cor, de formas diferentes, de te destacar</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'estilo','casual')">
+              <div class="opt-left"><span class="opt-icon">😌</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Casual e descomplicado</div>
+                <div class="opt-desc">Conforto em primeiro lugar, sem pensar demasiado</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P6 -->
+      <div class="step" id="step6">
+        <div class="step-inner">
+          <div class="step-tag">06 — Presença estrutural</div>
+          <div class="step-question">Independentemente da cor — o teu rosto tem traços fortes ou delicados?</div>
+          <div class="step-hint">Pensa na estrutura óssea, nas maçãs, no maxilar e na intensidade natural do olhar. O contraste não é só cor — é também arquitetura.</div>
+          <div class="options">
+            <div class="opt" onclick="seleccionar(this,'presenca','baixa')">
+              <div class="opt-left"><span class="opt-icon">🌸</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Delicado</div>
+                <div class="opt-desc">Traços finos, fisionomia suave, presença discreta</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'presenca','media')">
+              <div class="opt-left"><span class="opt-icon">🌿</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Equilibrado</div>
+                <div class="opt-desc">Nem muito marcado nem muito suave</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+            <div class="opt" onclick="seleccionar(this,'presenca','alta')">
+              <div class="opt-left"><span class="opt-icon">🦁</span></div>
+              <div class="opt-body">
+                <div class="opt-title">Marcado e forte</div>
+                <div class="opt-desc">Estrutura óssea visível, olhar intenso, presença natural imediata</div>
+              </div>
+              <div class="opt-check"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /steps-container -->
+
+    <!-- BARRA DE BOTÕES FIXA -->
+    <div class="btn-bar" id="btnBar">
+      <button class="btn btn-back" id="btnBack" onclick="voltar()" style="display:none">←</button>
+      <button class="btn btn-primary" id="btnNext" onclick="avancar()" disabled>Continuar →</button>
+    </div>
+
+  </div><!-- /questionario -->
+
+  <!-- RESULTADO -->
+  <div id="result">
+    <div class="result-hero">
+      <span class="result-check">✅</span>
+      <div class="result-title">O teu <em>diagnóstico</em></div>
+      <div class="result-sub" id="resultSub"></div>
+    </div>
+
+    <div class="diag-grid" id="diagGrid"></div>
+
+    <div class="frames-wrap">
+      <div class="sec-title">O que fica bem no teu rosto</div>
+      <div class="frames-grid" id="framesGrid"></div>
+      <div class="avoid-label">Evitar:</div>
+      <div class="avoid-tags" id="avoidTags"></div>
+    </div>
+
+    <div class="sec-title" style="margin-top:28px;">Para o teu tipo de uso</div>
+    <div class="uso-grid" id="usoGrid"></div>
+
+    <div class="fala-block">
+      <div class="fala-quote">"</div>
+      <span class="fala-label">Porque é que estas são as tuas armações</span>
+      <div class="fala-texto" id="falaTexto"></div>
+    </div>
+
+    <div class="reiniciar-wrap">
+      <p>Novo diagnóstico?</p>
+      <button class="btn-reiniciar" onclick="reiniciar()">← Recomeçar</button>
+    </div>
+
+    <div class="footer">Diagnóstico de Contraste · Consulta Óptica</div>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+const respostas = {};
+let passoActual = 1;
+const totalPassos = 6;
+
+function seleccionar(el, chave, valor) {
+  el.parentElement.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  respostas[chave] = valor;
+  document.getElementById('btnNext').disabled = false;
+}
+
+function actualizarUI() {
+  const pct = Math.round((passoActual / totalPassos) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('stepLabel').textContent = 'Pergunta ' + passoActual + ' de ' + totalPassos;
+  document.getElementById('stepPct').textContent = pct + '%';
+  document.getElementById('btnBack').style.display = passoActual > 1 ? 'block' : 'none';
+  // Update button text on last step
+  document.getElementById('btnNext').textContent = passoActual === totalPassos ? 'Ver o meu diagnóstico →' : 'Continuar →';
+  // Disable next if no answer for current step
+  const chaves = ['uso','contraste','sobrancelha','rosto','estilo','presenca'];
+  document.getElementById('btnNext').disabled = !respostas[chaves[passoActual - 1]];
+}
+
+function avancar() {
+  if (passoActual === totalPassos) {
+    mostrarResultado();
+    return;
+  }
+  document.getElementById('step' + passoActual).classList.remove('active');
+  passoActual++;
+  document.getElementById('step' + passoActual).classList.add('active');
+  actualizarUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function voltar() {
+  if (passoActual <= 1) return;
+  document.getElementById('step' + passoActual).classList.remove('active');
+  passoActual--;
+  document.getElementById('step' + passoActual).classList.add('active');
+  actualizarUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// DATA
+const armacoes = {
+  baixo: {
+    lista: [
+      { nome: 'Transparente', cor: '#d8d4cc', borda: '#aaa' },
+      { nome: 'Havana suave', cor: '#c4a070' },
+      { nome: 'Castanho leite', cor: '#b89070' },
+      { nome: 'Verde azeitona', cor: '#8a9a70' },
+      { nome: 'Nude / bege', cor: '#c8b09a' },
+      { nome: 'Dourado rosé', cor: '#c9a96e' },
+    ],
+    evitar: ['preto puro', 'vinho escuro', 'azul marinho', 'tons de alto contraste']
+  },
+  medio: {
+    lista: [
+      { nome: 'Havana médio', cor: '#8a6040' },
+      { nome: 'Verde musgo', cor: '#5a7a50' },
+      { nome: 'Azul petróleo', cor: '#3a6880' },
+      { nome: 'Castanho escuro', cor: '#5a3a28' },
+      { nome: 'Grafite', cor: '#5a5a60' },
+      { nome: 'Cobre', cor: '#a06040' },
+    ],
+    evitar: ['muito claro sem estrutura', 'branco puro', 'transparentes suaves']
+  },
+  alto: {
+    lista: [
+      { nome: 'Preto', cor: '#1a1614', borda: '#555' },
+      { nome: 'Bordô escuro', cor: '#6a1a2a' },
+      { nome: 'Azul marinho', cor: '#1a2a4a' },
+      { nome: 'Verde escuro', cor: '#1a3a28' },
+      { nome: 'Tartaruga escuro', cor: '#3a2010' },
+      { nome: 'Preto mate', cor: '#2a2620', borda: '#555' },
+    ],
+    evitar: ['transparentes', 'pastéis', 'tons lavados', 'nude sem estrutura']
+  }
+};
+
+const formas = {
+  oval: {
+    rec: 'O rosto oval adapta-se a praticamente tudo. Podes explorar formas angulares, redondas, geométricas — a proporção natural do rosto aguenta-as todas.',
+    evitar: 'Sem restrições relevantes de forma.'
+  },
+  redondo: {
+    rec: 'Linhas angulares ou rectangulares criam um contraste bonito com a suavidade do rosto. Armações com canto superior definido funcionam bem.',
+    evitar: 'Evitar formas redondas ou muito pequenas — amplificam o efeito circular.'
+  },
+  quadrado: {
+    rec: 'Formas redondas ou ovais suavizam o maxilar marcado. Aros finos e pontes leves equilibram sem apagar a estrutura.',
+    evitar: 'Evitar formas quadradas ou muito angulares — reforçam o que já está lá.'
+  },
+  coracao: {
+    rec: 'Armações com mais volume na metade inferior equilibram a testa. Cat-eye funciona com moderação; evitar demasiado volume em cima.',
+    evitar: 'Evitar armações muito largas ou com detalhes na parte superior.'
+  }
+};
+
+const usoInfo = {
+  grau: {
+    icone: '👓', tipo: 'Uso diário',
+    rec: 'Vais usá-los horas a fio — o peso e o equilíbrio importam tanto quanto a estética. Acetato fino ou titânio são escolhas inteligentes. A cor deve trabalhar com o rosto, não competir com ele.',
+    nota: 'A melhor armação diária é a que deixas de notar que estás a usar.'
+  },
+  sol: {
+    icone: '🕶️', tipo: 'Óculos de sol',
+    rec: 'No exterior tens mais margem para arriscar. Alinha a cor da lente com o teu contraste: âmbar e verde para contrastes baixos, lentes escuras para contrastes altos.',
+    nota: 'A lente é parte do visual — não é apenas protecção.'
+  },
+  leitura: {
+    icone: '📖', tipo: 'Leitura ou uso pontual',
+    rec: 'Como são usados de forma ocasional, há mais liberdade para uma cor ou forma diferente do habitual. Podem funcionar quase como um acessório intencional.',
+    nota: 'Boa oportunidade para escolher algo com personalidade própria.'
+  }
+};
+
+const argumentarios = {
+  baixo_suave: `O teu rosto tem uma <strong>harmonia tonal natural</strong>. A pele, o cabelo e as sobrancelhas vivem todas no mesmo intervalo de tom. Isso é uma vantagem — significa que qualquer armação escura criaria uma tensão que o rosto não pede. Com <strong>transparentes, havanas suaves ou tons próximos da pele</strong>, a armação integra-se e o rosto lê-se inteiro. O resultado é elegante sem esforço.`,
+  baixo_media: `Tens um contraste suave, mas as sobrancelhas já fazem trabalho no rosto — definem-no. Isso dá-te mais margem do que parece. Um <strong>havana médio ou um verde azeitona</strong> vai acrescentar presença sem criar desequilíbrio. A armação não precisa de ser tímida só porque o contraste é baixo.`,
+  baixo_marcada: `Aqui está a nuance que muita gente perde: o cabelo é claro, mas as sobrancelhas <strong>criam o contraste no rosto</strong>. Já existe tensão visual — a armação só precisa de a acompanhar. Um castanho escuro ou um grafite respeita essa estrutura sem a contradizer.`,
+  medio_suave: `O teu contraste é equilibrado — nem suave demais, nem dramático. Com traços delicados, <strong>um havana ou um azul petróleo</strong> vai adicionar definição de forma precisa. Evitar os extremos é a decisão certa aqui: o rosto fica natural e a armação não compete.`,
+  medio_media: `Contraste médio com presença real — o teu rosto aguenta bem <strong>cores com corpo</strong>: verde musgo, azul petróleo, castanho escuro. As sobrancelhas já ancoram o rosto; a armação pode trabalhar em conjunto com elas, não apenas ao lado.`,
+  medio_marcada: `O contraste cromático é médio, mas a estrutura do rosto é forte. Isso muda o diagnóstico. <strong>Um preto ou um bordô pode funcionar aqui</strong> — o rosto tem a "massa" para o segurar. Não te guies apenas pela cor do cabelo. Guia-te pelo que o rosto pede.`,
+  alto_suave: `O contraste é alto, mas os traços são delicados — é uma combinação que pede precisão. A resposta são <strong>armações escuras em formatos suaves ou finos</strong>: um preto em aro fino, um azul marinho em acetato delgado. A força está lá; a forma suaviza-a.`,
+  alto_media: `Alto contraste com boa presença — o teu rosto aguenta muito bem <strong>armações com peso e cor forte</strong>. Preto, bordô, azul marinho: qualquer um destes honra o drama natural do rosto. Armações muito claras ou lavadas perdem-se neste contexto.`,
+  alto_marcada: `O teu rosto <strong>pede uma armação com carácter</strong>. O contraste é alto e a estrutura é forte — uma armação leve ou transparente vai simplesmente desaparecer. Preto, bordô profundo, verde escuro: a armação tem de ter a presença do rosto. Aqui, menos é mesmo menos.`
+};
+
+function mostrarResultado() {
+  document.getElementById('questionario').style.display = 'none';
+  document.getElementById('mainHeader').style.display = 'none';
+  const resultEl = document.getElementById('result');
+  resultEl.classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const { uso, contraste, sobrancelha, rosto, presenca } = respostas;
+
+  const lC = { baixo: 'Baixo contraste', medio: 'Contraste médio', alto: 'Alto contraste' };
+  const lU = { grau: 'Uso diário', sol: 'Óculos de sol', leitura: 'Leitura' };
+  const lR = { oval: 'Oval', redondo: 'Redondo', quadrado: 'Quadrado', coracao: 'Coração' };
+
+  document.getElementById('resultSub').textContent = lC[contraste] + ' · Rosto ' + lR[rosto] + ' · ' + lU[uso];
+
+  const precisaElevar = (contraste === 'baixo' || contraste === 'medio') && presenca === 'alta';
+  const chaveArmacao = precisaElevar ? (contraste === 'baixo' ? 'medio' : 'alto') : contraste;
+  const notaPresenca = precisaElevar ? '⚠️ Estrutura forte — o contraste efectivo é mais alto do que parece' : 'Consistente com o contraste cromático';
+
+  document.getElementById('diagGrid').innerHTML =
+    '<div class="diag-card"><div class="diag-label">Contraste tonal</div><div class="diag-value">' + lC[contraste] + '</div><div class="diag-note">Distância tonal entre pele e cabelo</div></div>' +
+    '<div class="diag-card"><div class="diag-label">Sobrancelhas</div><div class="diag-value">' + (sobrancelha === 'suave' ? 'Suaves' : sobrancelha === 'media' ? 'Normais' : 'Marcadas') + '</div><div class="diag-note">Determinam o contraste real do rosto</div></div>' +
+    '<div class="diag-card"><div class="diag-label">Geometria</div><div class="diag-value">' + lR[rosto] + '</div><div class="diag-note">' + formas[rosto].evitar + '</div></div>' +
+    '<div class="diag-card' + (precisaElevar ? ' destaque' : '') + '"><div class="diag-label">Presença</div><div class="diag-value">' + (presenca === 'baixa' ? 'Delicada' : presenca === 'media' ? 'Equilibrada' : 'Marcada') + '</div><div class="diag-note">' + notaPresenca + '</div></div>';
+
+  const da = armacoes[chaveArmacao];
+  document.getElementById('framesGrid').innerHTML = da.lista.map(f =>
+    '<div class="frame-chip"><div class="frame-dot" style="background:' + f.cor + ';' + (f.borda ? 'border:1.5px solid '+f.borda+';' : '') + '"></div><div class="frame-name">' + f.nome + '</div></div>'
+  ).join('');
+  document.getElementById('avoidTags').innerHTML = da.evitar.map(a => '<span class="avoid-tag">' + a + '</span>').join('');
+
+  const du = usoInfo[uso];
+  const df = formas[rosto];
+  document.getElementById('usoGrid').innerHTML =
+    '<div class="uso-card destaque"><span class="uso-icon">' + du.icone + '</span><div class="uso-tipo">' + du.tipo + '</div><div class="uso-rec">' + du.rec + '</div><div class="uso-note">' + du.nota + '</div></div>' +
+    '<div class="uso-card"><span class="uso-icon">◻️</span><div class="uso-tipo">Forma da armação</div><div class="uso-rec">' + df.rec + '</div><div class="uso-note" style="color:var(--red);margin-top:4px;">' + df.evitar + '</div></div>';
+
+  const s = sobrancelha === 'suave' ? 'suave' : sobrancelha === 'media' ? 'media' : 'marcada';
+  let texto = argumentarios[contraste + '_' + s] || argumentarios[contraste + '_media'];
+  if (precisaElevar) texto += ' <strong>Uma nota:</strong> a força da estrutura do teu rosto justifica ir uma escala acima no peso da armação.';
+  document.getElementById('falaTexto').innerHTML = texto;
+}
+
+function reiniciar() {
+  Object.keys(respostas).forEach(k => delete respostas[k]);
+  passoActual = 1;
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('btnNext').disabled = true;
+  document.getElementById('btnNext').textContent = 'Continuar →';
+  document.getElementById('btnBack').style.display = 'none';
+  document.getElementById('progressFill').style.width = '16%';
+  document.getElementById('stepLabel').textContent = 'Pergunta 1 de 6';
+  document.getElementById('stepPct').textContent = '16%';
+  document.getElementById('questionario').style.display = 'block';
+  document.getElementById('mainHeader').style.display = 'block';
+  document.getElementById('result').classList.remove('visible');
+  document.getElementById('result').style.display = 'none';
+  setTimeout(() => { document.getElementById('result').style.display = ''; }, 10);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
