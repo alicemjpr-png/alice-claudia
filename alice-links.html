@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>Alice Cláudia</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+:root {
+  --bg: #0a0a0a;
+  --card: #141414;
+  --card-hover: #1c1c1c;
+  --cream: #f0e8d8;
+  --cream-dim: rgba(240,232,216,0.65);
+  --border: rgba(240,232,216,0.1);
+  --border-hover: rgba(184,148,74,0.4);
+  --gold: #c9a84c;
+  --gold-light: #e0c070;
+  --muted: rgba(240,232,216,0.5);
+}
+
+html, body { min-height:100%; background:var(--bg); -webkit-font-smoothing:antialiased; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 80px;
+}
+
+.container { width:100%; max-width:400px; padding:0 20px; }
+
+/* PROFILE */
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 56px;
+  margin-bottom: 44px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.avatar-wrap {
+  position: relative;
+  margin-bottom: 20px;
+  width: 76px;
+  height: 76px;
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  opacity: 0.6;
+}
+
+.avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--card);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar img { width:100%; height:100%; object-fit:cover; }
+
+.avatar-initials {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.profile-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--cream);
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.profile-tagline {
+  font-size: 14px;
+  color: rgba(240,232,216,0.7);
+  text-align: center;
+  line-height: 1.7;
+  max-width: 270px;
+}
+
+.profile-tagline em {
+  font-style: italic;
+  color: var(--gold-light);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+}
+
+/* SECTION */
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin: 0 0 8px;
+  opacity: 0.7;
+  animation: fadeUp 0.5s ease both;
+  animation-delay: 0.15s;
+}
+
+.cta-intro {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 20px;
+  animation: fadeUp 0.5s ease both;
+  animation-delay: 0.2s;
+}
+
+/* LINKS */
+.links { display:flex; flex-direction:column; gap:8px; }
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--cream);
+  transition: border-color 0.2s, background 0.2s;
+  animation: fadeUp 0.5s ease both;
+  position: relative;
+  overflow: hidden;
+}
+
+.link-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--gold);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.link-item:hover { border-color: var(--border-hover); background: var(--card-hover); }
+.link-item:hover::before { opacity: 1; }
+.link-item:active { transform: scale(0.99); }
+
+.link-item:nth-child(1){animation-delay:0.25s}
+.link-item:nth-child(2){animation-delay:0.32s}
+.link-item:nth-child(3){animation-delay:0.39s}
+.link-item:nth-child(4){animation-delay:0.46s}
+.link-item:nth-child(5){animation-delay:0.53s}
+
+.link-body { flex:1; min-width:0; }
+
+.link-type {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.8;
+  margin-bottom: 3px;
+}
+
+.link-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--cream);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.link-desc {
+  font-size: 12px;
+  color: var(--cream-dim);
+  line-height: 1.5;
+}
+
+.link-badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 5px 11px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid;
+}
+
+.badge-free {
+  color: rgba(240,232,216,0.6);
+  border-color: rgba(240,232,216,0.2);
+}
+
+.badge-paid {
+  color: var(--gold-light);
+  border-color: rgba(201,168,76,0.5);
+}
+
+/* CONTACT */
+.contact {
+  margin-top: 36px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  animation: fadeUp 0.5s ease both;
+  animation-delay: 0.6s;
+}
+
+.contact-link {
+  font-size: 12px;
+  color: rgba(240,232,216,0.5);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.contact-link:hover { color: var(--gold-light); }
+
+.footer {
+  margin-top: 36px;
+  text-align: center;
+  font-size: 10px;
+  color: rgba(240,232,216,0.18);
+  letter-spacing: 0.1em;
+  animation: fadeUp 0.5s ease both;
+  animation-delay: 0.65s;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="profile">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar">
+        <span class="avatar-initials">AC</span>
+      </div>
+    </div>
+    <h1 class="profile-name">Alice Cláudia</h1>
+    <p class="profile-tagline">
+      <em>A armação certa não é a que fica bem.</em><br>
+      É a que diz quem tu és.
+    </p>
+  </div>
+
+  <p class="section-label">Recursos &amp; Serviços</p>
+  <p class="cta-intro">Escolhe por onde queres começar.</p>
+
+  <div class="links">
+
+    <a href="consulta-oculos.html" class="link-item">
+      <div class="link-body">
+        <div class="link-type">Ferramenta gratuita</div>
+        <div class="link-title">Diagnóstico de Armação</div>
+        <div class="link-desc">Seis perguntas. Um resultado concreto. Sem achismos.</div>
+      </div>
+      <span class="link-badge badge-free">GRÁTIS</span>
+    </a>
+
+    <a href="#" class="link-item">
+      <div class="link-body">
+        <div class="link-type">E-book gratuito</div>
+        <div class="link-title">Óculos Perfeitos</div>
+        <div class="link-desc">O que ninguém te explicou antes de ires à ótica.</div>
+      </div>
+      <span class="link-badge badge-free">GRÁTIS</span>
+    </a>
+
+    <a href="#" class="link-item">
+      <div class="link-body">
+        <div class="link-type">E-book gratuito</div>
+        <div class="link-title">Não Sejas Alice</div>
+        <div class="link-desc">O que aprendi sozinha sobre hábitos e dia a dia. Sem filtros.</div>
+      </div>
+      <span class="link-badge badge-free">GRÁTIS</span>
+    </a>
+
+    <a href="#" class="link-item">
+      <div class="link-body">
+        <div class="link-type">Guia</div>
+        <div class="link-title">Vês-te ou Só Vês?</div>
+        <div class="link-desc">Visagismo aplicado a óculos. Proporção, contraste, identidade.</div>
+      </div>
+      <span class="link-badge badge-paid">5€</span>
+    </a>
+
+    <a href="consultoria-online.html" class="link-item">
+      <div class="link-body">
+        <div class="link-type">Orientação personalizada online</div>
+        <div class="link-title">Sessão Individual</div>
+        <div class="link-desc">Análise por fotografia. Recomendação personalizada de formato, cor e material. Resposta em 48 horas.</div>
+      </div>
+      <span class="link-badge badge-paid">10€</span>
+    </a>
+
+  </div>
+
+  <div class="contact">
+    <a href="mailto:alice.mjpr@gmail.com" class="contact-link">Email</a>
+    <a href="https://wa.link/bhl7g4" class="contact-link">WhatsApp</a>
+    <a href="https://www.instagram.com/alice_claudia_almeida" class="contact-link">Instagram</a>
+  </div>
+
+  <p class="footer">alice_claudia_almeida</p>
+
+</div>
+</body>
+</html>
