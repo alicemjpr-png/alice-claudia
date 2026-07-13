@@ -38,9 +38,11 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);mi
 .step-b{flex:1}
 .step-t{font-size:14px;font-weight:600;color:var(--cream);margin-bottom:3px}
 .step-d{font-size:12px;color:var(--muted);line-height:1.5}
-.mbway{background:rgba(184,144,74,0.08);border:1px solid rgba(184,144,74,0.25);border-radius:10px;padding:14px 16px;margin-top:10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.mbway-lbl{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-.mbway-num{font-family:'Lora',serif;font-size:22px;color:var(--gold);letter-spacing:0.05em}
+.pay-options{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.pay-opt{background:rgba(184,144,74,0.08);border:1px solid rgba(184,144,74,0.25);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.pay-lbl{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.pay-val{font-family:'Lora',serif;font-size:20px;color:var(--gold);letter-spacing:0.03em}
+.pay-sub{font-size:11px;color:var(--muted);margin-top:2px}
 .copy-btn{background:rgba(212,170,106,0.15);border:1px solid rgba(212,170,106,0.3);color:var(--gold);font-size:12px;padding:8px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap}
 .copy-btn:active{background:rgba(212,170,106,0.3)}
 .form-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin:0 20px 20px}
@@ -50,6 +52,7 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);mi
 .f-inp{width:100%;background:rgba(244,237,228,0.05);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--cream);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;-webkit-appearance:none}
 .f-inp:focus{border-color:rgba(212,170,106,0.4)}
 .f-inp::placeholder{color:var(--muted)}
+.f-sel{width:100%;background:rgba(244,237,228,0.05);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--cream);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;-webkit-appearance:none}
 .btn-main{width:100%;background:var(--gold2);color:#1a1714;font-size:15px;font-weight:600;padding:16px;border-radius:12px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px}
 .btn-main:active{background:var(--gold)}
 .footer{text-align:center;padding:32px 20px 0;font-size:11px;color:rgba(244,237,228,0.2)}
@@ -76,16 +79,16 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);mi
 
     <div class="price-box">
       <div class="price-lbl">Valor da Orientação Personalizada</div>
-      <div class="price-val"><span>&euro;</span>10</div>
+      <div class="price-val"><span>&euro;</span>25</div>
       <div class="price-note">Pagamento único · Resposta em até 48 horas</div>
     </div>
 
     <div class="inc-box">
       <div class="inc-lbl">O que inclui</div>
-      <div class="inc"><span class="inc-ico">📸</span><div class="inc-txt"><strong>Análise com base em fotografia</strong> do teu rosto, enviada pelo Instagram antes da orientação</div></div>
+      <div class="inc"><span class="inc-ico">📸</span><div class="inc-txt"><strong>Análise com base em fotografia</strong> do teu rosto, enviada por Instagram, email ou WhatsApp, juntamente com o comprovativo de pagamento, antes da orientação</div></div>
       <div class="inc"><span class="inc-ico">🕶️</span><div class="inc-txt"><strong>Recomendação personalizada</strong> de formatos, cores e materiais de armação</div></div>
       <div class="inc"><span class="inc-ico">💬</span><div class="inc-txt"><strong>Resumo por escrito</strong> com os modelos indicados para o teu perfil</div></div>
-      <div class="inc"><span class="inc-ico">📹</span><div class="inc-txt"><strong>Videochamada opcional</strong> para esclarecer dúvidas, se necessário</div></div>
+      <div class="inc"><span class="inc-ico">📹</span><div class="inc-txt"><strong>Videochamada de acompanhamento</strong> para esclarecer todas as dúvidas</div></div>
     </div>
 
     <div class="warn">
@@ -97,14 +100,30 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);mi
       <div class="step">
         <div class="step-n">1</div>
         <div class="step-b">
-          <div class="step-t">Transfere 10&euro; por MBWay</div>
-          <div class="step-d">Usa o número abaixo. Na descrição escreve o teu nome.</div>
-          <div class="mbway">
-            <div>
-              <div class="mbway-lbl">MBWay · Alice Cláudia</div>
-              <div class="mbway-num">913 305 225</div>
+          <div class="step-t">Paga 25&euro; por MBWay, transferência ou PayPal</div>
+          <div class="step-d">Escolhe a opção mais fácil para ti. Na descrição escreve o teu nome.</div>
+          <div class="pay-options">
+            <div class="pay-opt">
+              <div>
+                <div class="pay-lbl">MBWay · Alice Cláudia</div>
+                <div class="pay-val">913 305 225</div>
+              </div>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('913305225');this.textContent='Copiado!'">Copiar</button>
             </div>
-            <button class="copy-btn" onclick="navigator.clipboard.writeText('913305225');this.textContent='Copiado!'">Copiar</button>
+            <div class="pay-opt">
+              <div>
+                <div class="pay-lbl">Transferência bancária · Alice Cláudia</div>
+                <div class="pay-val" style="font-size:16px;letter-spacing:0.02em">PT50 0035 0240 0002 1105 4008 3</div>
+              </div>
+              <button class="copy-btn" onclick="navigator.clipboard.writeText('PT500035024000021105400 83'.replace(/\s/g,'').trim());this.textContent='Copiado!'">Copiar</button>
+            </div>
+            <div class="pay-opt">
+              <div>
+                <div class="pay-lbl">PayPal</div>
+                <div class="pay-sub">paypal.me/AliceClaudia3</div>
+              </div>
+              <a href="https://paypal.me/AliceClaudia3/25EUR?country.x=PT&locale.x=pt_PT" target="_blank" style="background:rgba(212,170,106,0.15);border:1px solid rgba(212,170,106,0.3);color:var(--gold);font-size:12px;padding:8px 14px;border-radius:8px;text-decoration:none;white-space:nowrap;font-family:'DM Sans',sans-serif">Pagar</a>
+            </div>
           </div>
         </div>
       </div>
@@ -119,7 +138,7 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);mi
         <div class="step-n">3</div>
         <div class="step-b">
           <div class="step-t">Recebe a ficha de orientação personalizada</div>
-          <div class="step-d">Após confirmação, preenche a ficha e envia as tuas fotos pelo Instagram.</div>
+          <div class="step-d">Após confirmação, preenche a ficha e envia as tuas fotos por Instagram, email ou WhatsApp.</div>
         </div>
       </div>
     </div>
@@ -135,8 +154,16 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);mi
         <input class="f-inp" type="email" id="email" placeholder="para receberes confirmação">
       </div>
       <div class="f-grp">
-        <label class="f-lbl">Últimos 4 dígitos do número de onde transferiste</label>
-        <input class="f-inp" type="tel" id="tel" placeholder="ex: 7832" maxlength="4">
+        <label class="f-lbl">Como pagaste?</label>
+        <select class="f-sel" id="metodo">
+          <option value="MBWay">MBWay</option>
+          <option value="Transferência">Transferência bancária</option>
+          <option value="PayPal">PayPal</option>
+        </select>
+      </div>
+      <div class="f-grp">
+        <label class="f-lbl">Últimos 4 dígitos do número / referência</label>
+        <input class="f-inp" type="text" id="tel" placeholder="ex: 7832" maxlength="4">
       </div>
       <button class="btn-main" id="btnOk" onclick="confirmar()">Confirmar e aceder ao formulário &rarr;</button>
     </div>
@@ -151,7 +178,7 @@ body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--cream);mi
     <span class="suc-ico">✨</span>
     <div class="suc-title">Obrigada, <span id="sucNome"></span>!</div>
     <p class="suc-sub">O teu formulário de orientação personalizada está pronto.<br>Clica abaixo para o preencher agora.</p>
-    <div class="suc-note">📸 <strong>Antes de submeter a ficha,</strong> envia uma foto natural e bem visível do teu rosto por mensagem directa no Instagram <strong>@alice_claudia_almeida</strong>. A tua orientação será enviada em até 48 horas.</div>
+    <div class="suc-note">📸 <strong>Antes de submeter a ficha,</strong> envia uma foto natural e bem visível do teu rosto por Instagram <strong>@alice_claudia_almeida</strong>, email ou WhatsApp, junto com o comprovativo de pagamento. A tua orientação será enviada em até 48 horas.</div>
     <a href="https://alicemjpr-png.github.io/alice-claudia/ficha-consultoria.html" class="btn-link" target="_blank">✏️&nbsp; Abrir ficha de orientação personalizada</a>
   </div>
 </div>
@@ -163,7 +190,7 @@ function confirmar(){
   var tel = document.getElementById('tel').value.trim();
   if(nome.length < 2){ alert('Por favor preenche o teu nome.'); return; }
   if(email.indexOf('@') < 1){ alert('Por favor preenche um email válido.'); return; }
-  if(tel.length < 4){ alert('Por favor preenche os 4 dígitos do teu número.'); return; }
+  if(tel.length < 4){ alert('Por favor preenche os 4 dígitos ou referência do pagamento.'); return; }
   document.getElementById('sucNome').textContent = nome;
   document.getElementById('main').style.display = 'none';
   document.getElementById('suc').style.display = 'block';
