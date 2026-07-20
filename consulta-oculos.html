@@ -3,176 +3,446 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orientação Personalizada de Óculos | Alice Cláudia</title>
+<title>Diagnóstico Rápido de Armação | Alice Cláudia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0a0a0a;
-    --card:#151310;
-    --gold:#C9A84C;
-    --gold-soft:#C4963A;
-    --text:#EDEAE3;
-    --text-muted:#9C978C;
-    --hairline:#2A2620;
+    --ink:#0B0B0C;
+    --ivory:#F5F1E8;
+    --gold:#C9A227;
+    --bronze:#8B7355;
+    --parchment:#E8E2D5;
+    --line-soft: rgba(245,241,232,0.18);
   }
-  *{box-sizing:border-box;margin:0;padding:0;}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
   body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:'DM Sans',sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Raleway', sans-serif;
+    font-weight:300;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 20px;
+    overflow-x:hidden;
   }
-  .wrap{max-width:560px;margin:0 auto;padding:64px 24px 96px;}
+  .stage{
+    width:100%;
+    max-width:640px;
+    position:relative;
+  }
   .eyebrow{
-    text-align:center;
-    font-size:13px;
-    letter-spacing:0.28em;
+    font-family:'Raleway', sans-serif;
+    font-size:11px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
     color:var(--gold);
-    font-weight:500;
-    margin-bottom:20px;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .eyebrow::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line-soft);
   }
   h1{
-    font-family:'Cormorant Garamond',serif;
+    font-family:'Cormorant Garamond', serif;
     font-weight:500;
-    font-size:44px;
+    font-size:clamp(32px, 6vw, 46px);
     line-height:1.15;
-    text-align:center;
-    color:var(--text);
+    letter-spacing:0.01em;
   }
   h1 em{
     font-style:italic;
     color:var(--gold);
+    font-weight:400;
   }
-  .subtitle{
-    text-align:center;
-    color:var(--text-muted);
-    font-size:16px;
-    max-width:420px;
-    margin:24px auto 48px;
-  }
-  .price-card{
-    background:linear-gradient(180deg,#1a1712,#120f0b);
-    border:1px solid var(--hairline);
-    border-radius:4px;
-    padding:40px 32px;
-    text-align:center;
-    margin-bottom:32px;
-  }
-  .price-label{
-    font-size:12px;
-    letter-spacing:0.22em;
-    color:var(--text-muted);
-    margin-bottom:20px;
-  }
-  .price{
-    font-family:'Cormorant Garamond',serif;
-    font-size:64px;
-    color:var(--gold);
-    font-weight:500;
-    line-height:1;
-  }
-  .price-meta{
+  .lede{
+    font-size:15px;
+    line-height:1.7;
+    color:var(--parchment);
     margin-top:18px;
-    font-size:14px;
-    color:var(--text-muted);
+    max-width:52ch;
   }
-  .payment-methods{
-    margin-top:16px;
-    font-size:13px;
-    color:var(--text-muted);
-    letter-spacing:0.02em;
+
+  /* signature: the line motif — straight vs curved, echoing psicologia das linhas */
+  .line-motif{
+    width:100%;
+    height:64px;
+    margin:34px 0 30px;
   }
-  .payment-methods span{
-    color:var(--gold-soft);
+  .line-motif svg{width:100%; height:100%; display:block;}
+  .line-motif path{
+    fill:none;
+    stroke:var(--gold);
+    stroke-width:1.4;
+    stroke-linecap:round;
+    transition:d 0.7s cubic-bezier(.65,0,.35,1), opacity 0.7s ease;
   }
-  .section{
-    border:1px solid var(--hairline);
-    border-radius:4px;
-    padding:32px;
-    margin-bottom:24px;
+
+  .card{
+    background:linear-gradient(180deg, rgba(245,241,232,0.04), rgba(245,241,232,0.01));
+    border:1px solid var(--line-soft);
+    border-radius:2px;
+    padding:36px 32px;
   }
-  .section-title{
-    font-size:12px;
-    letter-spacing:0.22em;
-    color:var(--gold);
-    margin-bottom:24px;
-  }
-  .item{
+
+  .progress{
     display:flex;
-    gap:16px;
+    gap:8px;
+    margin-bottom:28px;
+  }
+  .progress span{
+    height:2px;
+    flex:1;
+    background:var(--line-soft);
+    position:relative;
+    overflow:hidden;
+  }
+  .progress span::after{
+    content:"";
+    position:absolute; inset:0;
+    background:var(--gold);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.5s ease;
+  }
+  .progress span.done::after{transform:scaleX(1);}
+
+  .q-label{
+    font-family:'Raleway', sans-serif;
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--bronze);
+    margin-bottom:10px;
+  }
+  .q-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:26px;
+    font-weight:500;
+    line-height:1.35;
+    margin-bottom:26px;
+  }
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .opt{
+    text-align:left;
+    background:transparent;
+    border:1px solid var(--line-soft);
+    color:var(--ivory);
+    font-family:'Raleway', sans-serif;
+    font-weight:400;
+    font-size:14.5px;
+    line-height:1.5;
+    padding:16px 18px;
+    cursor:pointer;
+    transition:border-color 0.25s ease, background 0.25s ease, transform 0.15s ease;
+  }
+  .opt:hover{
+    border-color:var(--gold);
+    background:rgba(201,162,39,0.06);
+  }
+  .opt:active{transform:scale(0.995);}
+
+  .screen{display:none;}
+  .screen.active{display:block; animation:fade 0.5s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .start-btn, .cta-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--gold);
+    color:var(--ink);
+    font-family:'Raleway', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    text-decoration:none;
+    padding:16px 30px;
+    border:none;
+    cursor:pointer;
+    margin-top:8px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .start-btn:hover, .cta-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 24px rgba(201,162,39,0.25);
+  }
+
+  .result-eyebrow{
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:8px;
+  }
+  .result-title{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(26px,5vw,32px);
+    font-weight:500;
+    margin-bottom:18px;
+  }
+  .result-body p{
+    font-size:14.5px;
+    line-height:1.75;
+    color:var(--parchment);
+    margin-bottom:14px;
+  }
+  .result-body strong{color:var(--ivory); font-weight:500;}
+  .divider{
+    height:1px;
+    background:var(--line-soft);
+    margin:26px 0;
+  }
+  .limit-note{
+    font-size:12.5px;
+    line-height:1.7;
+    color:var(--bronze);
+    font-style:italic;
+    font-family:'Cormorant Garamond', serif;
     margin-bottom:22px;
   }
-  .item:last-child{margin-bottom:0;}
-  .item-icon{font-size:20px;line-height:1.4;}
-  .item-text strong{
-    color:var(--text);
-    font-weight:600;
+  .cta-block{
+    background:rgba(201,162,39,0.06);
+    border:1px solid rgba(201,162,39,0.25);
+    padding:26px 24px;
   }
-  .item-text{
-    color:var(--text-muted);
-    font-size:15px;
+  .cta-block .q-label{color:var(--gold);}
+  .cta-block p{
+    font-size:14px;
+    line-height:1.7;
+    color:var(--parchment);
+    margin-bottom:16px;
   }
-  .cta{
-    display:block;
+  .price{
+    font-family:'Cormorant Garamond', serif;
+    font-size:20px;
+    color:var(--gold);
+  }
+  footer{
+    margin-top:28px;
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--bronze);
     text-align:center;
-    background:var(--gold);
-    color:#0a0a0a;
-    font-weight:600;
-    font-size:15px;
-    padding:18px;
-    border-radius:4px;
-    text-decoration:none;
-    margin-top:8px;
   }
-  .footnote{
-    text-align:center;
-    color:var(--text-muted);
-    font-size:13px;
-    margin-top:20px;
+  .restart{
+    background:none; border:none;
+    color:var(--bronze);
+    font-family:'Raleway',sans-serif;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-decoration:underline;
+    cursor:pointer;
+    margin-top:18px;
   }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="eyebrow">ALICE CLÁUDIA</div>
-    <h1>Orientação Personalizada<br><em>de Óculos</em></h1>
-    <p class="subtitle">Uma preparação personalizada para encontrares a armação certa, antes de ires à loja ou para orientares a tua escolha onde estiveres.</p>
 
-    <div class="price-card">
-      <div class="price-label">VALOR DA ORIENTAÇÃO PERSONALIZADA</div>
-      <div class="price">€25</div>
-      <div class="price-meta">Pagamento único · Resposta em até 48 horas</div>
-      <div class="payment-methods">Pagamento por <span>MB WAY</span>, <span>transferência bancária</span> ou <span>PayPal</span></div>
-    </div>
+<div class="stage">
+  <div class="eyebrow">ALICE CLÁUDIA · ÓPTICA & CONSULTORIA DE IMAGEM</div>
 
-    <div class="section">
-      <div class="section-title">O QUE INCLUI</div>
-
-      <div class="item">
-        <div class="item-icon">📸</div>
-        <div class="item-text"><strong>Análise com base em fotografia</strong> do teu rosto, enviada por Instagram, email ou WhatsApp, juntamente com o comprovativo de pagamento, antes da orientação</div>
-      </div>
-
-      <div class="item">
-        <div class="item-icon">👓</div>
-        <div class="item-text"><strong>Recomendação personalizada</strong> de formatos, cores e materiais de armação</div>
-      </div>
-
-      <div class="item">
-        <div class="item-icon">💬</div>
-        <div class="item-text"><strong>Resumo por escrito</strong> com os modelos indicados para o teu perfil</div>
-      </div>
-
-      <div class="item">
-        <div class="item-icon">🎥</div>
-        <div class="item-text"><strong>Videochamada de acompanhamento</strong> para esclarecer todas as dúvidas</div>
-      </div>
-    </div>
-
-    <a href="https://wa.link/bhl7g4" class="cta" target="_blank" rel="noopener">Pedir Orientação Personalizada</a>
-    <p class="footnote">Envia mensagem por WhatsApp, Instagram ou email (alice.mjpr@gmail.com) — foto e comprovativo de pagamento primeiro, para iniciarmos a orientação.</p>
+  <div class="line-motif">
+    <svg viewBox="0 0 600 64" preserveAspectRatio="none">
+      <path id="motifPath" d="M0,32 L600,32" />
+    </svg>
   </div>
+
+  <!-- SCREEN 0 — INTRO -->
+  <div class="screen active" id="screen-0">
+    <h1>Não é o <em>formato do rosto</em><br>que escolhe a tua armação.</h1>
+    <p class="lede">É só uma de quatro variáveis. Em 4 perguntas rápidas mostro-te onde estás a acertar, onde estás a errar sem saber, e o que realmente falta para a escolha certa.</p>
+    <button class="start-btn" onclick="goTo(1)">Começar diagnóstico →</button>
+  </div>
+
+  <!-- SCREEN 1 -->
+  <div class="screen" id="screen-1">
+    <div class="card">
+      <div class="progress" id="progress"></div>
+      <div class="q-label">Pergunta 1 de 4</div>
+      <div class="q-title">O que queres que a tua armação comunique, antes de dizeres uma palavra?</div>
+      <div class="options">
+        <button class="opt" onclick="answer(1,'A')">Autoridade e firmeza. Quero ser levada a sério à primeira vista</button>
+        <button class="opt" onclick="answer(1,'B')">Leveza e acessibilidade. Quero parecer fácil de abordar</button>
+        <button class="opt" onclick="answer(1,'C')">As duas coisas, dependendo do contexto</button>
+        <button class="opt" onclick="answer(1,'D')">Sinceramente, nunca pensei nisto em termos de comunicação</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 -->
+  <div class="screen" id="screen-2">
+    <div class="card">
+      <div class="progress" id="progress2"></div>
+      <div class="q-label">Pergunta 2 de 4</div>
+      <div class="q-title">Olha ao espelho um segundo. O que mais se destaca no teu rosto?</div>
+      <div class="options">
+        <button class="opt" onclick="answer(2,'A')">A linha da mandíbula, bem marcada</button>
+        <button class="opt" onclick="answer(2,'B')">O rosto é claramente mais comprido do que largo</button>
+        <button class="opt" onclick="answer(2,'C')">As bochechas são a zona mais larga</button>
+        <button class="opt" onclick="answer(2,'D')">A testa é mais larga do que o queixo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3 -->
+  <div class="screen" id="screen-3">
+    <div class="card">
+      <div class="progress" id="progress3"></div>
+      <div class="q-label">Pergunta 3 de 4</div>
+      <div class="q-title">Que metal costuma ficar-te melhor, em jóias ou acessórios?</div>
+      <div class="options">
+        <button class="opt" onclick="answer(3,'A')">Dourado</button>
+        <button class="opt" onclick="answer(3,'B')">Prateado</button>
+        <button class="opt" onclick="answer(3,'C')">Os dois me favorecem, sem grande diferença</button>
+        <button class="opt" onclick="answer(3,'D')">Nunca reparei nisso</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4 -->
+  <div class="screen" id="screen-4">
+    <div class="card">
+      <div class="progress" id="progress4"></div>
+      <div class="q-label">Pergunta 4 de 4</div>
+      <div class="q-title">Qual destas frases mais descreve a tua relação com a escolha de óculos?</div>
+      <div class="options">
+        <button class="opt" onclick="answer(4,'A')">Escolho pelo que gosto visualmente, sem pensar muito no rosto</button>
+        <button class="opt" onclick="answer(4,'B')">Sigo a regra de "combinar com o formato do rosto" e mesmo assim não fico satisfeita</button>
+        <button class="opt" onclick="answer(4,'C')">Nunca sei se uma armação está a ficar "pesada" ou "leve" demais para mim</button>
+        <button class="opt" onclick="answer(4,'D')">Compro, uso umas semanas, e sinto que aquilo não é bem "a minha cara"</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 5 — RESULT -->
+  <div class="screen" id="screen-5">
+    <div class="card">
+      <div class="result-eyebrow">O teu ponto de partida</div>
+      <div class="result-title" id="resultTitle"></div>
+      <div class="result-body" id="resultBody"></div>
+
+      <div class="divider"></div>
+      <p class="limit-note" id="limitNote"></p>
+
+      <div class="cta-block">
+        <div class="q-label">O que este diagnóstico não consegue ver</div>
+        <p>Este teste trabalha com o que me dizes sobre ti. A Orientação Personalizada trabalha com o que eu <strong>vejo</strong>: o teu contraste pessoal, o subtom real da tua pele, a proporção exata entre as tuas feições e o ângulo pantoscópico que a tua armação atual talvez esteja a ignorar. É a diferença entre uma hipótese bem fundamentada e uma resposta certa para ti.</p>
+        <p class="price">Orientação Personalizada · 25€</p>
+        <a class="cta-btn" href="https://wa.link/bhl7g4" target="_blank" rel="noopener">Pedir a minha orientação →</a>
+      </div>
+
+      <button class="restart" onclick="goTo(0)">Refazer o diagnóstico</button>
+    </div>
+  </div>
+
+  <footer>alicemjpr-png.github.io/alice-claudia</footer>
+</div>
+
+<script>
+const answers = {};
+const motifs = {
+  0: "M0,32 L600,32",
+  1: "M0,32 C100,10 200,54 300,32 C400,10 500,54 600,32",
+  2: "M0,32 L150,10 L300,54 L450,10 L600,32",
+  3: "M0,32 C150,50 250,14 300,32 C350,50 450,14 600,32",
+  4: "M0,32 L200,32 C260,32 260,10 320,10 L600,10",
+  5: "M0,42 C150,10 300,54 450,10 L600,32"
+};
+
+function setMotif(step){
+  document.getElementById('motifPath').setAttribute('d', motifs[step] || motifs[0]);
+}
+
+function buildProgress(container, activeCount){
+  container.innerHTML = '';
+  for(let i=0;i<4;i++){
+    const s = document.createElement('span');
+    if(i < activeCount) s.classList.add('done');
+    container.appendChild(s);
+  }
+}
+
+function goTo(step){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+step).classList.add('active');
+  setMotif(step);
+  if(step>=1 && step<=4){
+    const prog = document.getElementById(step===1 ? 'progress' : 'progress'+step);
+    buildProgress(prog, step-1);
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function answer(q, val){
+  answers[q] = val;
+  if(q < 4){
+    goTo(q+1);
+  } else {
+    renderResult();
+    goTo(5);
+  }
+}
+
+function renderResult(){
+  const shapeMap = {
+    A: {name:"rosto de mandíbula marcada (tendência quadrada/angulosa)", tip:"Armações com curvas suaves e cantos arredondados equilibram essa força natural. A mandíbula não precisa de ser escondida, precisa de uma linha que a acompanhe em vez de competir com ela."},
+    B: {name:"rosto alongado (tendência oval/comprida)", tip:"O teu maior aliado é a largura visual: armações com mais presença horizontal e ponte bem desenhada encurtam a sensação de comprimento, sem cortar a elegância que já tens."},
+    C: {name:"rosto com zona média mais larga (tendência redonda)", tip:"Linhas retas e angulares na parte superior da armação criam estrutura onde o rosto pede um ponto focal. Dão arquitetura, não disfarce."},
+    D: {name:"rosto com testa dominante (tendência triângulo invertido)", tip:"O equilíbrio vem de baixo: armações com mais presença na base e menos peso visual na parte superior trazem a proporção de volta ao centro."}
+  };
+
+  const lineMap = {
+    A: "Isso alinha-se com armações de linhas retas e geométricas. Comunicam essa autoridade antes de abrires a boca.",
+    B: "Isso pede curvas: linhas suaves, cantos arredondados, menos ângulo. É a gramática visual da acessibilidade.",
+    C: "Vale a pena teres duas armações com personalidades diferentes, uma mais reta para contextos de maior formalidade, outra mais curva para o dia a dia.",
+    D: "Isto sozinho já é uma boa razão para veres o resto deste diagnóstico: a tua armação está provavelmente a comunicar algo que nunca escolheste."
+  };
+
+  const undertoneMap = {
+    A: "O dourado a favorecer-te é um bom indicador de subtom quente. Acetatos em tons terrosos, dourados ou tartaruga tendem a somar à tua pele em vez de competir com ela.",
+    B: "O prateado a favorecer-te aponta para subtom frio. Metais prateados, gunmetal ou acetatos acinzentados tendem a harmonizar melhor do que o dourado.",
+    C: "Favorecida pelos dois metais, provavelmente tens um subtom neutro. Tens mais liberdade de cor do que a maioria, o que é uma vantagem, mas também mais fácil de desperdiçar sem orientação.",
+    D: "Isto é normal, a maioria das pessoas nunca testou isto conscientemente. E é exatamente o tipo de informação que uma análise de contraste pessoal, feita com foto, revela em minutos."
+  };
+
+  const mythMap = {
+    A: "O erro mais comum não é a tua falta de gosto, é escolher sem saber que cor, espessura e proporção pesam tanto quanto o formato.",
+    B: "A regra de 'combinar com o formato do rosto' explica talvez 20% da escolha certa. Podes segui-la à risca e continuar insatisfeita, porque falta o resto da equação: cor, contraste pessoal, espessura do acetato, ângulo pantoscópico.",
+    C: "Essa sensação de 'pesado' ou 'leve' não é acaso, é a relação entre a espessura do acetato e o teu nível de contraste pessoal. Sem saber o teu contraste, estás sempre a adivinhar.",
+    D: "Sentir que 'não é a tua cara' costuma significar que a armação foi escolhida para o rosto certo, mas com a comunicação errada para quem és."
+  };
+
+  const shape = shapeMap[answers[2]];
+  const line = lineMap[answers[1]];
+  const undertone = undertoneMap[answers[3]];
+  const myth = mythMap[answers[4]];
+
+  document.getElementById('resultTitle').innerHTML = `Indícios de um <em style="color:var(--gold); font-style:italic;">${shape.name}</em>`;
+  document.getElementById('resultBody').innerHTML = `
+    <p>${shape.tip}</p>
+    <p>${line}</p>
+    <p>${undertone}</p>
+  `;
+  document.getElementById('limitNote').textContent = myth;
+}
+
+setMotif(0);
+</script>
+
 </body>
 </html>
